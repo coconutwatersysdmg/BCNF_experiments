@@ -1,0 +1,141 @@
+Generating n=1000 seed=1 ...
+n=1000 seed=1 pass Singleton-FullScan: median=0.488262s result=True
+n=1000 seed=1 pass FD-Hash: median=0.018697s result=True
+n=1000 seed=1 pass BCNF-Index: median=0.008136s result=True
+n=1000 seed=1 fail Singleton-FullScan: median=0.205106s result=False
+n=1000 seed=1 fail FD-Hash: median=0.018276s result=False
+n=1000 seed=1 fail BCNF-Index: median=0.007136s result=False
+Generating n=1000 seed=2 ...
+n=1000 seed=2 pass Singleton-FullScan: median=0.486674s result=True
+n=1000 seed=2 pass FD-Hash: median=0.018087s result=True
+n=1000 seed=2 pass BCNF-Index: median=0.008122s result=True
+n=1000 seed=2 fail Singleton-FullScan: median=0.352066s result=False
+n=1000 seed=2 fail FD-Hash: median=0.017332s result=False
+n=1000 seed=2 fail BCNF-Index: median=0.003384s result=False
+Generating n=1000 seed=3 ...
+n=1000 seed=3 pass Singleton-FullScan: median=0.485692s result=True
+n=1000 seed=3 pass FD-Hash: median=0.019061s result=True
+n=1000 seed=3 pass BCNF-Index: median=0.008373s result=True
+n=1000 seed=3 fail Singleton-FullScan: median=0.488328s result=False
+n=1000 seed=3 fail FD-Hash: median=0.018700s result=False
+n=1000 seed=3 fail BCNF-Index: median=0.004176s result=False
+Generating n=1000 seed=4 ...
+n=1000 seed=4 pass Singleton-FullScan: median=0.529098s result=True
+n=1000 seed=4 pass FD-Hash: median=0.019067s result=True
+n=1000 seed=4 pass BCNF-Index: median=0.008084s result=True
+n=1000 seed=4 fail Singleton-FullScan: median=0.405511s result=False
+n=1000 seed=4 fail FD-Hash: median=0.025559s result=False
+n=1000 seed=4 fail BCNF-Index: median=0.007236s result=False
+Generating n=1000 seed=5 ...
+n=1000 seed=5 pass Singleton-FullScan: median=0.532190s result=True
+n=1000 seed=5 pass FD-Hash: median=0.020935s result=True
+n=1000 seed=5 pass BCNF-Index: median=0.008147s result=True
+n=1000 seed=5 fail Singleton-FullScan: median=0.121787s result=False
+n=1000 seed=5 fail FD-Hash: median=0.019343s result=False
+n=1000 seed=5 fail BCNF-Index: median=0.006367s result=False
+Generating n=10000 seed=1 ...
+n=10000 seed=1 pass Singleton-FullScan: median=48.162001s result=True
+n=10000 seed=1 pass FD-Hash: median=0.180451s result=True
+n=10000 seed=1 pass BCNF-Index: median=0.080507s result=True
+n=10000 seed=1 fail Singleton-FullScan: median=11.649756s result=False
+n=10000 seed=1 fail FD-Hash: median=0.178370s result=False
+n=10000 seed=1 fail BCNF-Index: median=0.065959s result=False
+Generating n=10000 seed=2 ...
+n=10000 seed=2 pass Singleton-FullScan: median=46.938981s result=True
+n=10000 seed=2 pass FD-Hash: median=0.179760s result=True
+n=10000 seed=2 pass BCNF-Index: median=0.084950s result=True
+n=10000 seed=2 fail Singleton-FullScan: median=25.299914s result=False
+n=10000 seed=2 fail FD-Hash: median=0.188824s result=False
+n=10000 seed=2 fail BCNF-Index: median=0.057342s result=False
+Generating n=10000 seed=3 ...
+n=10000 seed=3 pass Singleton-FullScan: median=47.200836s result=True
+n=10000 seed=3 pass FD-Hash: median=0.187742s result=True
+n=10000 seed=3 pass BCNF-Index: median=0.080283s result=True
+n=10000 seed=3 fail Singleton-FullScan: median=8.147047s result=False
+n=10000 seed=3 fail FD-Hash: median=0.181777s result=False
+n=10000 seed=3 fail BCNF-Index: median=0.069056s result=False
+Generating n=10000 seed=4 ...
+n=10000 seed=4 pass Singleton-FullScan: median=47.102314s result=True
+n=10000 seed=4 pass FD-Hash: median=0.185143s result=True
+n=10000 seed=4 pass BCNF-Index: median=0.079146s result=True
+n=10000 seed=4 fail Singleton-FullScan: median=38.883594s result=False
+n=10000 seed=4 fail FD-Hash: median=0.174622s result=False
+n=10000 seed=4 fail BCNF-Index: median=0.047835s result=False
+Generating n=10000 seed=5 ...
+n=10000 seed=5 pass Singleton-FullScan: median=47.456148s result=True
+n=10000 seed=5 pass FD-Hash: median=0.182800s result=True
+n=10000 seed=5 pass BCNF-Index: median=0.080820s result=True
+n=10000 seed=5 fail Singleton-FullScan: median=14.046822s result=False
+n=10000 seed=5 fail FD-Hash: median=0.174003s result=False
+n=10000 seed=5 fail BCNF-Index: median=0.048063s result=False
+Generating n=100000 seed=1 ...
+n=100000 seed=1 pass Singleton-FullScan: TIMEOUT
+n=100000 seed=1 pass FD-Hash: median=2.218869s result=True
+n=100000 seed=1 pass BCNF-Index: median=0.930995s result=True
+n=100000 seed=1 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=1 fail FD-Hash: median=2.005351s result=False
+n=100000 seed=1 fail BCNF-Index: median=0.640314s result=False
+Generating n=100000 seed=2 ...
+n=100000 seed=2 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=2 pass FD-Hash: median=2.044400s result=True
+n=100000 seed=2 pass BCNF-Index: median=1.194586s result=True
+n=100000 seed=2 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=2 fail FD-Hash: median=2.223240s result=False
+n=100000 seed=2 fail BCNF-Index: median=0.522025s result=False
+Generating n=100000 seed=3 ...
+n=100000 seed=3 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=3 pass FD-Hash: median=2.363688s result=True
+n=100000 seed=3 pass BCNF-Index: median=0.944480s result=True
+n=100000 seed=3 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=3 fail FD-Hash: median=2.025423s result=False
+n=100000 seed=3 fail BCNF-Index: median=0.466295s result=False
+Generating n=100000 seed=4 ...
+n=100000 seed=4 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=4 pass FD-Hash: median=2.022023s result=True
+n=100000 seed=4 pass BCNF-Index: median=0.887717s result=True
+n=100000 seed=4 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=4 fail FD-Hash: median=1.896999s result=False
+n=100000 seed=4 fail BCNF-Index: median=0.739844s result=False
+Generating n=100000 seed=5 ...
+n=100000 seed=5 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=5 pass FD-Hash: median=1.928796s result=True
+n=100000 seed=5 pass BCNF-Index: median=0.854584s result=True
+n=100000 seed=5 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=5 fail FD-Hash: median=1.848291s result=False
+n=100000 seed=5 fail BCNF-Index: median=0.414429s result=False
+Generating n=1000000 seed=1 ...
+n=1000000 seed=1 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=1 pass FD-Hash: median=19.543662s result=True
+n=1000000 seed=1 pass BCNF-Index: median=9.238453s result=True
+n=1000000 seed=1 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=1 fail FD-Hash: median=18.521422s result=False
+n=1000000 seed=1 fail BCNF-Index: median=3.372605s result=False
+Generating n=1000000 seed=2 ...
+n=1000000 seed=2 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=2 pass FD-Hash: median=19.285526s result=True
+n=1000000 seed=2 pass BCNF-Index: median=9.153748s result=True
+n=1000000 seed=2 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=2 fail FD-Hash: median=18.990926s result=False
+n=1000000 seed=2 fail BCNF-Index: median=7.683256s result=False
+Generating n=1000000 seed=3 ...
+n=1000000 seed=3 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=3 pass FD-Hash: median=19.300490s result=True
+n=1000000 seed=3 pass BCNF-Index: median=9.195782s result=True
+n=1000000 seed=3 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=3 fail FD-Hash: median=18.719171s result=False
+n=1000000 seed=3 fail BCNF-Index: median=3.157875s result=False
+Generating n=1000000 seed=4 ...
+n=1000000 seed=4 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=4 pass FD-Hash: median=19.176354s result=True
+n=1000000 seed=4 pass BCNF-Index: median=9.101437s result=True
+n=1000000 seed=4 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=4 fail FD-Hash: median=19.185687s result=False
+n=1000000 seed=4 fail BCNF-Index: median=7.483204s result=False
+Generating n=1000000 seed=5 ...
+n=1000000 seed=5 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=5 pass FD-Hash: median=19.286314s result=True
+n=1000000 seed=5 pass BCNF-Index: median=9.193286s result=True
+n=1000000 seed=5 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=5 fail FD-Hash: median=18.821468s result=False
+n=1000000 seed=5 fail BCNF-Index: median=5.471651s result=False
+Wrote results\static.csv (520 rows)

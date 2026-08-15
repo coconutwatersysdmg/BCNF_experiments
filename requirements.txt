@@ -1,0 +1,11 @@
+# Core dependencies for algorithm experiments
+pytest>=7.0
+pandas>=1.5
+matplotlib>=3.6
+
+# Optional: process RSS memory reporting
+# psutil>=5.9
+
+# Optional: local HuggingFace LLM backend (NOT required for algorithm experiments)
+# transformers>=4.36
+# torch>=2.0

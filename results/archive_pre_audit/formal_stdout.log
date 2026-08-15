@@ -1,0 +1,403 @@
+[2026-08-13T13:30:02.746679+00:00] START formal pipeline root=E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments
+[2026-08-13T13:30:02.747701+00:00] Skip n=1e7: insufficient free RAM for safe 1e7 runs on this machine
+[2026-08-13T13:30:02.772946+00:00] available_RAM_GB=2.85
+[2026-08-13T13:30:02.773946+00:00] RUN: D:\ProgramData\anaconda3\python.exe -u scripts/run_static.py --sizes 1000 10000 100000 1000000 --seeds 1 2 3 4 5 --case both --repeats 5 --warmup 1 --timeout 600 --hard-timeout --out results/static.csv
+Generating n=1000 seed=1 ...
+n=1000 seed=1 pass Singleton-FullScan: median=0.488262s result=True
+n=1000 seed=1 pass FD-Hash: median=0.018697s result=True
+n=1000 seed=1 pass BCNF-Index: median=0.008136s result=True
+n=1000 seed=1 fail Singleton-FullScan: median=0.205106s result=False
+n=1000 seed=1 fail FD-Hash: median=0.018276s result=False
+n=1000 seed=1 fail BCNF-Index: median=0.007136s result=False
+Generating n=1000 seed=2 ...
+n=1000 seed=2 pass Singleton-FullScan: median=0.486674s result=True
+n=1000 seed=2 pass FD-Hash: median=0.018087s result=True
+n=1000 seed=2 pass BCNF-Index: median=0.008122s result=True
+n=1000 seed=2 fail Singleton-FullScan: median=0.352066s result=False
+n=1000 seed=2 fail FD-Hash: median=0.017332s result=False
+n=1000 seed=2 fail BCNF-Index: median=0.003384s result=False
+Generating n=1000 seed=3 ...
+n=1000 seed=3 pass Singleton-FullScan: median=0.485692s result=True
+n=1000 seed=3 pass FD-Hash: median=0.019061s result=True
+n=1000 seed=3 pass BCNF-Index: median=0.008373s result=True
+n=1000 seed=3 fail Singleton-FullScan: median=0.488328s result=False
+n=1000 seed=3 fail FD-Hash: median=0.018700s result=False
+n=1000 seed=3 fail BCNF-Index: median=0.004176s result=False
+Generating n=1000 seed=4 ...
+n=1000 seed=4 pass Singleton-FullScan: median=0.529098s result=True
+n=1000 seed=4 pass FD-Hash: median=0.019067s result=True
+n=1000 seed=4 pass BCNF-Index: median=0.008084s result=True
+n=1000 seed=4 fail Singleton-FullScan: median=0.405511s result=False
+n=1000 seed=4 fail FD-Hash: median=0.025559s result=False
+n=1000 seed=4 fail BCNF-Index: median=0.007236s result=False
+Generating n=1000 seed=5 ...
+n=1000 seed=5 pass Singleton-FullScan: median=0.532190s result=True
+n=1000 seed=5 pass FD-Hash: median=0.020935s result=True
+n=1000 seed=5 pass BCNF-Index: median=0.008147s result=True
+n=1000 seed=5 fail Singleton-FullScan: median=0.121787s result=False
+n=1000 seed=5 fail FD-Hash: median=0.019343s result=False
+n=1000 seed=5 fail BCNF-Index: median=0.006367s result=False
+Generating n=10000 seed=1 ...
+n=10000 seed=1 pass Singleton-FullScan: median=48.162001s result=True
+n=10000 seed=1 pass FD-Hash: median=0.180451s result=True
+n=10000 seed=1 pass BCNF-Index: median=0.080507s result=True
+n=10000 seed=1 fail Singleton-FullScan: median=11.649756s result=False
+n=10000 seed=1 fail FD-Hash: median=0.178370s result=False
+n=10000 seed=1 fail BCNF-Index: median=0.065959s result=False
+Generating n=10000 seed=2 ...
+n=10000 seed=2 pass Singleton-FullScan: median=46.938981s result=True
+n=10000 seed=2 pass FD-Hash: median=0.179760s result=True
+n=10000 seed=2 pass BCNF-Index: median=0.084950s result=True
+n=10000 seed=2 fail Singleton-FullScan: median=25.299914s result=False
+n=10000 seed=2 fail FD-Hash: median=0.188824s result=False
+n=10000 seed=2 fail BCNF-Index: median=0.057342s result=False
+Generating n=10000 seed=3 ...
+n=10000 seed=3 pass Singleton-FullScan: median=47.200836s result=True
+n=10000 seed=3 pass FD-Hash: median=0.187742s result=True
+n=10000 seed=3 pass BCNF-Index: median=0.080283s result=True
+n=10000 seed=3 fail Singleton-FullScan: median=8.147047s result=False
+n=10000 seed=3 fail FD-Hash: median=0.181777s result=False
+n=10000 seed=3 fail BCNF-Index: median=0.069056s result=False
+Generating n=10000 seed=4 ...
+n=10000 seed=4 pass Singleton-FullScan: median=47.102314s result=True
+n=10000 seed=4 pass FD-Hash: median=0.185143s result=True
+n=10000 seed=4 pass BCNF-Index: median=0.079146s result=True
+n=10000 seed=4 fail Singleton-FullScan: median=38.883594s result=False
+n=10000 seed=4 fail FD-Hash: median=0.174622s result=False
+n=10000 seed=4 fail BCNF-Index: median=0.047835s result=False
+Generating n=10000 seed=5 ...
+n=10000 seed=5 pass Singleton-FullScan: median=47.456148s result=True
+n=10000 seed=5 pass FD-Hash: median=0.182800s result=True
+n=10000 seed=5 pass BCNF-Index: median=0.080820s result=True
+n=10000 seed=5 fail Singleton-FullScan: median=14.046822s result=False
+n=10000 seed=5 fail FD-Hash: median=0.174003s result=False
+n=10000 seed=5 fail BCNF-Index: median=0.048063s result=False
+Generating n=100000 seed=1 ...
+n=100000 seed=1 pass Singleton-FullScan: TIMEOUT
+n=100000 seed=1 pass FD-Hash: median=2.218869s result=True
+n=100000 seed=1 pass BCNF-Index: median=0.930995s result=True
+n=100000 seed=1 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=1 fail FD-Hash: median=2.005351s result=False
+n=100000 seed=1 fail BCNF-Index: median=0.640314s result=False
+Generating n=100000 seed=2 ...
+n=100000 seed=2 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=2 pass FD-Hash: median=2.044400s result=True
+n=100000 seed=2 pass BCNF-Index: median=1.194586s result=True
+n=100000 seed=2 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=2 fail FD-Hash: median=2.223240s result=False
+n=100000 seed=2 fail BCNF-Index: median=0.522025s result=False
+Generating n=100000 seed=3 ...
+n=100000 seed=3 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=3 pass FD-Hash: median=2.363688s result=True
+n=100000 seed=3 pass BCNF-Index: median=0.944480s result=True
+n=100000 seed=3 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=3 fail FD-Hash: median=2.025423s result=False
+n=100000 seed=3 fail BCNF-Index: median=0.466295s result=False
+Generating n=100000 seed=4 ...
+n=100000 seed=4 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=4 pass FD-Hash: median=2.022023s result=True
+n=100000 seed=4 pass BCNF-Index: median=0.887717s result=True
+n=100000 seed=4 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=4 fail FD-Hash: median=1.896999s result=False
+n=100000 seed=4 fail BCNF-Index: median=0.739844s result=False
+Generating n=100000 seed=5 ...
+n=100000 seed=5 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=5 pass FD-Hash: median=1.928796s result=True
+n=100000 seed=5 pass BCNF-Index: median=0.854584s result=True
+n=100000 seed=5 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=100000 seed=5 fail FD-Hash: median=1.848291s result=False
+n=100000 seed=5 fail BCNF-Index: median=0.414429s result=False
+Generating n=1000000 seed=1 ...
+n=1000000 seed=1 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=1 pass FD-Hash: median=19.543662s result=True
+n=1000000 seed=1 pass BCNF-Index: median=9.238453s result=True
+n=1000000 seed=1 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=1 fail FD-Hash: median=18.521422s result=False
+n=1000000 seed=1 fail BCNF-Index: median=3.372605s result=False
+Generating n=1000000 seed=2 ...
+n=1000000 seed=2 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=2 pass FD-Hash: median=19.285526s result=True
+n=1000000 seed=2 pass BCNF-Index: median=9.153748s result=True
+n=1000000 seed=2 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=2 fail FD-Hash: median=18.990926s result=False
+n=1000000 seed=2 fail BCNF-Index: median=7.683256s result=False
+Generating n=1000000 seed=3 ...
+n=1000000 seed=3 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=3 pass FD-Hash: median=19.300490s result=True
+n=1000000 seed=3 pass BCNF-Index: median=9.195782s result=True
+n=1000000 seed=3 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=3 fail FD-Hash: median=18.719171s result=False
+n=1000000 seed=3 fail BCNF-Index: median=3.157875s result=False
+Generating n=1000000 seed=4 ...
+n=1000000 seed=4 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=4 pass FD-Hash: median=19.176354s result=True
+n=1000000 seed=4 pass BCNF-Index: median=9.101437s result=True
+n=1000000 seed=4 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=4 fail FD-Hash: median=19.185687s result=False
+n=1000000 seed=4 fail BCNF-Index: median=7.483204s result=False
+Generating n=1000000 seed=5 ...
+n=1000000 seed=5 pass Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=5 pass FD-Hash: median=19.286314s result=True
+n=1000000 seed=5 pass BCNF-Index: median=9.193286s result=True
+n=1000000 seed=5 fail Singleton-FullScan: SKIP(timeout@>=100000)
+n=1000000 seed=5 fail FD-Hash: median=18.821468s result=False
+n=1000000 seed=5 fail BCNF-Index: median=5.471651s result=False
+Wrote results\static.csv (520 rows)
+[2026-08-13T14:38:06.580777+00:00] STATIC exit=0 elapsed_min=68.1
+[2026-08-13T14:38:06.580777+00:00] RUN: D:\ProgramData\anaconda3\python.exe -u scripts/run_sensitivity.py --n 1000000 --seeds 1 2 3 4 5 --repeats 5 --experiments conflict_ratio fd_count key_width --out results/sensitivity.csv
+A_conflict_ratio: conflict_ratio=0.01 seed=1
+  FD-Hash: median=18.844020s compression=0.750
+  BCNF-Index: median=3.576531s compression=0.750
+A_conflict_ratio: conflict_ratio=0.01 seed=2
+  FD-Hash: median=18.782915s compression=0.750
+  BCNF-Index: median=3.526924s compression=0.750
+A_conflict_ratio: conflict_ratio=0.01 seed=3
+  FD-Hash: median=18.862184s compression=0.750
+  BCNF-Index: median=3.514610s compression=0.750
+A_conflict_ratio: conflict_ratio=0.01 seed=4
+  FD-Hash: median=18.766025s compression=0.750
+  BCNF-Index: median=3.538391s compression=0.750
+A_conflict_ratio: conflict_ratio=0.01 seed=5
+  FD-Hash: median=18.922831s compression=0.750
+  BCNF-Index: median=3.514750s compression=0.750
+A_conflict_ratio: conflict_ratio=0.05 seed=1
+  FD-Hash: median=19.357390s compression=0.750
+  BCNF-Index: median=6.125847s compression=0.750
+A_conflict_ratio: conflict_ratio=0.05 seed=2
+  FD-Hash: median=19.099473s compression=0.750
+  BCNF-Index: median=6.023631s compression=0.750
+A_conflict_ratio: conflict_ratio=0.05 seed=3
+  FD-Hash: median=19.368783s compression=0.750
+  BCNF-Index: median=6.051231s compression=0.750
+A_conflict_ratio: conflict_ratio=0.05 seed=4
+  FD-Hash: median=19.209869s compression=0.750
+  BCNF-Index: median=6.084558s compression=0.750
+A_conflict_ratio: conflict_ratio=0.05 seed=5
+  FD-Hash: median=19.282798s compression=0.750
+  BCNF-Index: median=5.984872s compression=0.750
+A_conflict_ratio: conflict_ratio=0.1 seed=1
+  FD-Hash: median=19.717649s compression=0.750
+  BCNF-Index: median=9.232544s compression=0.750
+A_conflict_ratio: conflict_ratio=0.1 seed=2
+  FD-Hash: median=19.639897s compression=0.750
+  BCNF-Index: median=9.203926s compression=0.750
+A_conflict_ratio: conflict_ratio=0.1 seed=3
+  FD-Hash: median=19.540580s compression=0.750
+  BCNF-Index: median=9.192052s compression=0.750
+A_conflict_ratio: conflict_ratio=0.1 seed=4
+  FD-Hash: median=19.436974s compression=0.750
+  BCNF-Index: median=9.137760s compression=0.750
+A_conflict_ratio: conflict_ratio=0.1 seed=5
+  FD-Hash: median=19.480168s compression=0.750
+  BCNF-Index: median=9.210644s compression=0.750
+A_conflict_ratio: conflict_ratio=0.2 seed=1
+  FD-Hash: median=20.436526s compression=0.750
+  BCNF-Index: median=15.532229s compression=0.750
+A_conflict_ratio: conflict_ratio=0.2 seed=2
+  FD-Hash: median=20.637880s compression=0.750
+  BCNF-Index: median=16.047695s compression=0.750
+A_conflict_ratio: conflict_ratio=0.2 seed=3
+  FD-Hash: median=20.269320s compression=0.750
+  BCNF-Index: median=15.484475s compression=0.750
+A_conflict_ratio: conflict_ratio=0.2 seed=4
+  FD-Hash: median=20.389235s compression=0.750
+  BCNF-Index: median=15.429045s compression=0.750
+A_conflict_ratio: conflict_ratio=0.2 seed=5
+  FD-Hash: median=20.468515s compression=0.750
+  BCNF-Index: median=15.412260s compression=0.750
+A_conflict_ratio: conflict_ratio=0.4 seed=1
+  FD-Hash: median=22.389501s compression=0.750
+  BCNF-Index: median=28.113283s compression=0.750
+A_conflict_ratio: conflict_ratio=0.4 seed=2
+  FD-Hash: median=21.971222s compression=0.750
+  BCNF-Index: median=27.859660s compression=0.750
+A_conflict_ratio: conflict_ratio=0.4 seed=3
+  FD-Hash: median=22.000626s compression=0.750
+  BCNF-Index: median=28.047664s compression=0.750
+A_conflict_ratio: conflict_ratio=0.4 seed=4
+  FD-Hash: median=21.820115s compression=0.750
+  BCNF-Index: median=28.125293s compression=0.750
+A_conflict_ratio: conflict_ratio=0.4 seed=5
+  FD-Hash: median=21.761691s compression=0.750
+  BCNF-Index: median=28.142954s compression=0.750
+B_fd_count: fd_count=1 seed=1
+  FD-Hash: median=6.203861s compression=0.000
+  BCNF-Index: median=9.120571s compression=0.000
+B_fd_count: fd_count=1 seed=2
+  FD-Hash: median=6.265267s compression=0.000
+  BCNF-Index: median=9.092663s compression=0.000
+B_fd_count: fd_count=1 seed=3
+  FD-Hash: median=6.178829s compression=0.000
+  BCNF-Index: median=9.111521s compression=0.000
+B_fd_count: fd_count=1 seed=4
+  FD-Hash: median=6.295358s compression=0.000
+  BCNF-Index: median=9.160421s compression=0.000
+B_fd_count: fd_count=1 seed=5
+  FD-Hash: median=6.320390s compression=0.000
+  BCNF-Index: median=9.129746s compression=0.000
+B_fd_count: fd_count=2 seed=1
+  FD-Hash: median=10.542211s compression=0.500
+  BCNF-Index: median=9.186953s compression=0.500
+B_fd_count: fd_count=2 seed=2
+  FD-Hash: median=10.503029s compression=0.500
+  BCNF-Index: median=9.120465s compression=0.500
+B_fd_count: fd_count=2 seed=3
+  FD-Hash: median=10.522551s compression=0.500
+  BCNF-Index: median=9.185936s compression=0.500
+B_fd_count: fd_count=2 seed=4
+  FD-Hash: median=10.617404s compression=0.500
+  BCNF-Index: median=9.226672s compression=0.500
+B_fd_count: fd_count=2 seed=5
+  FD-Hash: median=10.556068s compression=0.500
+  BCNF-Index: median=9.177617s compression=0.500
+B_fd_count: fd_count=4 seed=1
+  FD-Hash: median=19.387401s compression=0.750
+  BCNF-Index: median=9.047872s compression=0.750
+B_fd_count: fd_count=4 seed=2
+  FD-Hash: median=19.403860s compression=0.750
+  BCNF-Index: median=9.129117s compression=0.750
+B_fd_count: fd_count=4 seed=3
+  FD-Hash: median=19.404337s compression=0.750
+  BCNF-Index: median=9.201333s compression=0.750
+B_fd_count: fd_count=4 seed=4
+  FD-Hash: median=19.367770s compression=0.750
+  BCNF-Index: median=9.154280s compression=0.750
+B_fd_count: fd_count=4 seed=5
+  FD-Hash: median=19.633284s compression=0.750
+  BCNF-Index: median=9.197275s compression=0.750
+B_fd_count: fd_count=8 seed=1
+  FD-Hash: median=36.957486s compression=0.875
+  BCNF-Index: median=9.064100s compression=0.875
+B_fd_count: fd_count=8 seed=2
+  FD-Hash: median=36.855581s compression=0.875
+  BCNF-Index: median=9.098252s compression=0.875
+B_fd_count: fd_count=8 seed=3
+  FD-Hash: median=36.873170s compression=0.875
+  BCNF-Index: median=9.057799s compression=0.875
+B_fd_count: fd_count=8 seed=4
+  FD-Hash: median=36.753578s compression=0.875
+  BCNF-Index: median=9.081591s compression=0.875
+B_fd_count: fd_count=8 seed=5
+  FD-Hash: median=36.886823s compression=0.875
+  BCNF-Index: median=9.121059s compression=0.875
+B_fd_count: fd_count=16 seed=1
+  FD-Hash: median=69.494478s compression=0.933
+  BCNF-Index: median=9.179567s compression=0.933
+B_fd_count: fd_count=16 seed=2
+  FD-Hash: median=69.435635s compression=0.933
+  BCNF-Index: median=9.161179s compression=0.933
+B_fd_count: fd_count=16 seed=3
+  FD-Hash: median=69.278247s compression=0.933
+  BCNF-Index: median=9.106168s compression=0.933
+B_fd_count: fd_count=16 seed=4
+  FD-Hash: median=69.450988s compression=0.933
+  BCNF-Index: median=9.058396s compression=0.933
+B_fd_count: fd_count=16 seed=5
+  FD-Hash: median=69.730923s compression=0.933
+  BCNF-Index: median=9.148335s compression=0.933
+C_key_width: key_width=1 seed=1
+  FD-Hash: median=19.538995s compression=0.750
+  BCNF-Index: median=9.205042s compression=0.750
+C_key_width: key_width=1 seed=2
+  FD-Hash: median=19.387454s compression=0.750
+  BCNF-Index: median=9.136210s compression=0.750
+C_key_width: key_width=1 seed=3
+  FD-Hash: median=19.567768s compression=0.750
+  BCNF-Index: median=9.120031s compression=0.750
+C_key_width: key_width=1 seed=4
+  FD-Hash: median=19.726516s compression=0.750
+  BCNF-Index: median=9.192382s compression=0.750
+C_key_width: key_width=1 seed=5
+  FD-Hash: median=19.594034s compression=0.750
+  BCNF-Index: median=9.154593s compression=0.750
+C_key_width: key_width=2 seed=1
+  FD-Hash: median=19.783546s compression=0.750
+  BCNF-Index: median=8.725767s compression=0.750
+C_key_width: key_width=2 seed=2
+  FD-Hash: median=19.790929s compression=0.750
+  BCNF-Index: median=8.650199s compression=0.750
+C_key_width: key_width=2 seed=3
+  FD-Hash: median=19.735404s compression=0.750
+  BCNF-Index: median=8.742578s compression=0.750
+C_key_width: key_width=2 seed=4
+  FD-Hash: median=19.599294s compression=0.750
+  BCNF-Index: median=8.600360s compression=0.750
+C_key_width: key_width=2 seed=5
+  FD-Hash: median=19.746307s compression=0.750
+  BCNF-Index: median=8.655174s compression=0.750
+C_key_width: key_width=4 seed=1
+  FD-Hash: median=20.291509s compression=0.750
+  BCNF-Index: median=7.842334s compression=0.750
+C_key_width: key_width=4 seed=2
+  FD-Hash: median=20.286769s compression=0.750
+  BCNF-Index: median=7.776540s compression=0.750
+C_key_width: key_width=4 seed=3
+  FD-Hash: median=20.382222s compression=0.750
+  BCNF-Index: median=7.759940s compression=0.750
+C_key_width: key_width=4 seed=4
+  FD-Hash: median=20.492866s compression=0.750
+  BCNF-Index: median=7.715853s compression=0.750
+C_key_width: key_width=4 seed=5
+  FD-Hash: median=20.322590s compression=0.750
+  BCNF-Index: median=7.816260s compression=0.750
+Wrote results\sensitivity.csv (650 rows)
+[2026-08-13T18:11:05.131071+00:00] SENSITIVITY exit=0 elapsed_min=213.0
+[2026-08-13T18:11:05.131071+00:00] RUN: D:\ProgramData\anaconda3\python.exe -u scripts/run_incremental.py --n 1000000 --updates 10000 --max-batches 50 --batch-sizes 1 10 100 1000 10000 --seeds 1 2 3 4 5 --distributions uniform zipf --out results/incremental.csv
+Generating n=1000000 seed=1 ...
+seed=1 dist=uniform batch_size=1 batches=50 all_match=True
+seed=1 dist=uniform batch_size=10 batches=50 all_match=True
+seed=1 dist=uniform batch_size=100 batches=50 all_match=True
+seed=1 dist=uniform batch_size=1000 batches=10 all_match=True
+seed=1 dist=uniform batch_size=10000 batches=1 all_match=True
+seed=1 dist=zipf batch_size=1 batches=50 all_match=True
+seed=1 dist=zipf batch_size=10 batches=50 all_match=True
+seed=1 dist=zipf batch_size=100 batches=50 all_match=True
+seed=1 dist=zipf batch_size=1000 batches=10 all_match=True
+seed=1 dist=zipf batch_size=10000 batches=1 all_match=True
+Generating n=1000000 seed=2 ...
+seed=2 dist=uniform batch_size=1 batches=50 all_match=True
+seed=2 dist=uniform batch_size=10 batches=50 all_match=True
+seed=2 dist=uniform batch_size=100 batches=50 all_match=True
+seed=2 dist=uniform batch_size=1000 batches=10 all_match=True
+seed=2 dist=uniform batch_size=10000 batches=1 all_match=True
+seed=2 dist=zipf batch_size=1 batches=50 all_match=True
+seed=2 dist=zipf batch_size=10 batches=50 all_match=True
+seed=2 dist=zipf batch_size=100 batches=50 all_match=True
+seed=2 dist=zipf batch_size=1000 batches=10 all_match=True
+seed=2 dist=zipf batch_size=10000 batches=1 all_match=True
+Generating n=1000000 seed=3 ...
+seed=3 dist=uniform batch_size=1 batches=50 all_match=True
+seed=3 dist=uniform batch_size=10 batches=50 all_match=True
+seed=3 dist=uniform batch_size=100 batches=50 all_match=True
+seed=3 dist=uniform batch_size=1000 batches=10 all_match=True
+seed=3 dist=uniform batch_size=10000 batches=1 all_match=True
+seed=3 dist=zipf batch_size=1 batches=50 all_match=True
+seed=3 dist=zipf batch_size=10 batches=50 all_match=True
+seed=3 dist=zipf batch_size=100 batches=50 all_match=True
+seed=3 dist=zipf batch_size=1000 batches=10 all_match=True
+seed=3 dist=zipf batch_size=10000 batches=1 all_match=True
+Generating n=1000000 seed=4 ...
+seed=4 dist=uniform batch_size=1 batches=50 all_match=True
+seed=4 dist=uniform batch_size=10 batches=50 all_match=True
+seed=4 dist=uniform batch_size=100 batches=50 all_match=True
+seed=4 dist=uniform batch_size=1000 batches=10 all_match=True
+seed=4 dist=uniform batch_size=10000 batches=1 all_match=True
+seed=4 dist=zipf batch_size=1 batches=50 all_match=True
+seed=4 dist=zipf batch_size=10 batches=50 all_match=True
+seed=4 dist=zipf batch_size=100 batches=50 all_match=True
+seed=4 dist=zipf batch_size=1000 batches=10 all_match=True
+seed=4 dist=zipf batch_size=10000 batches=1 all_match=True
+Generating n=1000000 seed=5 ...
+seed=5 dist=uniform batch_size=1 batches=50 all_match=True
+seed=5 dist=uniform batch_size=10 batches=50 all_match=True
+seed=5 dist=uniform batch_size=100 batches=50 all_match=True
+seed=5 dist=uniform batch_size=1000 batches=10 all_match=True
+seed=5 dist=uniform batch_size=10000 batches=1 all_match=True
+seed=5 dist=zipf batch_size=1 batches=50 all_match=True
+seed=5 dist=zipf batch_size=10 batches=50 all_match=True
+seed=5 dist=zipf batch_size=100 batches=50 all_match=True
+seed=5 dist=zipf batch_size=1000 batches=10 all_match=True
+seed=5 dist=zipf batch_size=10000 batches=1 all_match=True
+Wrote results\incremental.csv; all result_match=True (1610 rows)
+[2026-08-15T11:07:41.489480+00:00] INCREMENTAL exit=0 elapsed_min=2456.6
+[2026-08-15T11:07:41.490511+00:00] DONE static=0 sensitivity=0 incremental=0

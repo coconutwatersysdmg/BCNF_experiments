@@ -1,0 +1,10 @@
+[2026-08-13T13:30:02.746679+00:00] START formal pipeline root=E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments
+[2026-08-13T13:30:02.747701+00:00] Skip n=1e7: insufficient free RAM for safe 1e7 runs on this machine
+[2026-08-13T13:30:02.772946+00:00] available_RAM_GB=2.85
+[2026-08-13T13:30:02.773946+00:00] RUN: D:\ProgramData\anaconda3\python.exe -u scripts/run_static.py --sizes 1000 10000 100000 1000000 --seeds 1 2 3 4 5 --case both --repeats 5 --warmup 1 --timeout 600 --hard-timeout --out results/static.csv
+[2026-08-13T14:38:06.580777+00:00] STATIC exit=0 elapsed_min=68.1
+[2026-08-13T14:38:06.580777+00:00] RUN: D:\ProgramData\anaconda3\python.exe -u scripts/run_sensitivity.py --n 1000000 --seeds 1 2 3 4 5 --repeats 5 --experiments conflict_ratio fd_count key_width --out results/sensitivity.csv
+[2026-08-13T18:11:05.131071+00:00] SENSITIVITY exit=0 elapsed_min=213.0
+[2026-08-13T18:11:05.131071+00:00] RUN: D:\ProgramData\anaconda3\python.exe -u scripts/run_incremental.py --n 1000000 --updates 10000 --max-batches 50 --batch-sizes 1 10 100 1000 10000 --seeds 1 2 3 4 5 --distributions uniform zipf --out results/incremental.csv
+[2026-08-15T11:07:41.489480+00:00] INCREMENTAL exit=0 elapsed_min=2456.6
+[2026-08-15T11:07:41.490511+00:00] DONE static=0 sensitivity=0 incremental=0

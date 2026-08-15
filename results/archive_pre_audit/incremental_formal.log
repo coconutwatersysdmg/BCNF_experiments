@@ -1,0 +1,56 @@
+Generating n=1000000 seed=1 ...
+seed=1 dist=uniform batch_size=1 batches=50 all_match=True
+seed=1 dist=uniform batch_size=10 batches=50 all_match=True
+seed=1 dist=uniform batch_size=100 batches=50 all_match=True
+seed=1 dist=uniform batch_size=1000 batches=10 all_match=True
+seed=1 dist=uniform batch_size=10000 batches=1 all_match=True
+seed=1 dist=zipf batch_size=1 batches=50 all_match=True
+seed=1 dist=zipf batch_size=10 batches=50 all_match=True
+seed=1 dist=zipf batch_size=100 batches=50 all_match=True
+seed=1 dist=zipf batch_size=1000 batches=10 all_match=True
+seed=1 dist=zipf batch_size=10000 batches=1 all_match=True
+Generating n=1000000 seed=2 ...
+seed=2 dist=uniform batch_size=1 batches=50 all_match=True
+seed=2 dist=uniform batch_size=10 batches=50 all_match=True
+seed=2 dist=uniform batch_size=100 batches=50 all_match=True
+seed=2 dist=uniform batch_size=1000 batches=10 all_match=True
+seed=2 dist=uniform batch_size=10000 batches=1 all_match=True
+seed=2 dist=zipf batch_size=1 batches=50 all_match=True
+seed=2 dist=zipf batch_size=10 batches=50 all_match=True
+seed=2 dist=zipf batch_size=100 batches=50 all_match=True
+seed=2 dist=zipf batch_size=1000 batches=10 all_match=True
+seed=2 dist=zipf batch_size=10000 batches=1 all_match=True
+Generating n=1000000 seed=3 ...
+seed=3 dist=uniform batch_size=1 batches=50 all_match=True
+seed=3 dist=uniform batch_size=10 batches=50 all_match=True
+seed=3 dist=uniform batch_size=100 batches=50 all_match=True
+seed=3 dist=uniform batch_size=1000 batches=10 all_match=True
+seed=3 dist=uniform batch_size=10000 batches=1 all_match=True
+seed=3 dist=zipf batch_size=1 batches=50 all_match=True
+seed=3 dist=zipf batch_size=10 batches=50 all_match=True
+seed=3 dist=zipf batch_size=100 batches=50 all_match=True
+seed=3 dist=zipf batch_size=1000 batches=10 all_match=True
+seed=3 dist=zipf batch_size=10000 batches=1 all_match=True
+Generating n=1000000 seed=4 ...
+seed=4 dist=uniform batch_size=1 batches=50 all_match=True
+seed=4 dist=uniform batch_size=10 batches=50 all_match=True
+seed=4 dist=uniform batch_size=100 batches=50 all_match=True
+seed=4 dist=uniform batch_size=1000 batches=10 all_match=True
+seed=4 dist=uniform batch_size=10000 batches=1 all_match=True
+seed=4 dist=zipf batch_size=1 batches=50 all_match=True
+seed=4 dist=zipf batch_size=10 batches=50 all_match=True
+seed=4 dist=zipf batch_size=100 batches=50 all_match=True
+seed=4 dist=zipf batch_size=1000 batches=10 all_match=True
+seed=4 dist=zipf batch_size=10000 batches=1 all_match=True
+Generating n=1000000 seed=5 ...
+seed=5 dist=uniform batch_size=1 batches=50 all_match=True
+seed=5 dist=uniform batch_size=10 batches=50 all_match=True
+seed=5 dist=uniform batch_size=100 batches=50 all_match=True
+seed=5 dist=uniform batch_size=1000 batches=10 all_match=True
+seed=5 dist=uniform batch_size=10000 batches=1 all_match=True
+seed=5 dist=zipf batch_size=1 batches=50 all_match=True
+seed=5 dist=zipf batch_size=10 batches=50 all_match=True
+seed=5 dist=zipf batch_size=100 batches=50 all_match=True
+seed=5 dist=zipf batch_size=1000 batches=10 all_match=True
+seed=5 dist=zipf batch_size=10000 batches=1 all_match=True
+Wrote results\incremental.csv; all result_match=True (1610 rows)

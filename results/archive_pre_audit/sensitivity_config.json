@@ -1,0 +1,20 @@
+{
+  "timestamp_utc": "2026-08-13T14:38:06.681270+00:00",
+  "config": {
+    "n": 1000000,
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "repeats": 5,
+    "experiments": [
+      "conflict_ratio",
+      "fd_count",
+      "key_width"
+    ],
+    "out": "results\\sensitivity.csv"
+  }
+}

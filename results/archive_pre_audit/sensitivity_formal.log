@@ -1,0 +1,196 @@
+A_conflict_ratio: conflict_ratio=0.01 seed=1
+  FD-Hash: median=18.844020s compression=0.750
+  BCNF-Index: median=3.576531s compression=0.750
+A_conflict_ratio: conflict_ratio=0.01 seed=2
+  FD-Hash: median=18.782915s compression=0.750
+  BCNF-Index: median=3.526924s compression=0.750
+A_conflict_ratio: conflict_ratio=0.01 seed=3
+  FD-Hash: median=18.862184s compression=0.750
+  BCNF-Index: median=3.514610s compression=0.750
+A_conflict_ratio: conflict_ratio=0.01 seed=4
+  FD-Hash: median=18.766025s compression=0.750
+  BCNF-Index: median=3.538391s compression=0.750
+A_conflict_ratio: conflict_ratio=0.01 seed=5
+  FD-Hash: median=18.922831s compression=0.750
+  BCNF-Index: median=3.514750s compression=0.750
+A_conflict_ratio: conflict_ratio=0.05 seed=1
+  FD-Hash: median=19.357390s compression=0.750
+  BCNF-Index: median=6.125847s compression=0.750
+A_conflict_ratio: conflict_ratio=0.05 seed=2
+  FD-Hash: median=19.099473s compression=0.750
+  BCNF-Index: median=6.023631s compression=0.750
+A_conflict_ratio: conflict_ratio=0.05 seed=3
+  FD-Hash: median=19.368783s compression=0.750
+  BCNF-Index: median=6.051231s compression=0.750
+A_conflict_ratio: conflict_ratio=0.05 seed=4
+  FD-Hash: median=19.209869s compression=0.750
+  BCNF-Index: median=6.084558s compression=0.750
+A_conflict_ratio: conflict_ratio=0.05 seed=5
+  FD-Hash: median=19.282798s compression=0.750
+  BCNF-Index: median=5.984872s compression=0.750
+A_conflict_ratio: conflict_ratio=0.1 seed=1
+  FD-Hash: median=19.717649s compression=0.750
+  BCNF-Index: median=9.232544s compression=0.750
+A_conflict_ratio: conflict_ratio=0.1 seed=2
+  FD-Hash: median=19.639897s compression=0.750
+  BCNF-Index: median=9.203926s compression=0.750
+A_conflict_ratio: conflict_ratio=0.1 seed=3
+  FD-Hash: median=19.540580s compression=0.750
+  BCNF-Index: median=9.192052s compression=0.750
+A_conflict_ratio: conflict_ratio=0.1 seed=4
+  FD-Hash: median=19.436974s compression=0.750
+  BCNF-Index: median=9.137760s compression=0.750
+A_conflict_ratio: conflict_ratio=0.1 seed=5
+  FD-Hash: median=19.480168s compression=0.750
+  BCNF-Index: median=9.210644s compression=0.750
+A_conflict_ratio: conflict_ratio=0.2 seed=1
+  FD-Hash: median=20.436526s compression=0.750
+  BCNF-Index: median=15.532229s compression=0.750
+A_conflict_ratio: conflict_ratio=0.2 seed=2
+  FD-Hash: median=20.637880s compression=0.750
+  BCNF-Index: median=16.047695s compression=0.750
+A_conflict_ratio: conflict_ratio=0.2 seed=3
+  FD-Hash: median=20.269320s compression=0.750
+  BCNF-Index: median=15.484475s compression=0.750
+A_conflict_ratio: conflict_ratio=0.2 seed=4
+  FD-Hash: median=20.389235s compression=0.750
+  BCNF-Index: median=15.429045s compression=0.750
+A_conflict_ratio: conflict_ratio=0.2 seed=5
+  FD-Hash: median=20.468515s compression=0.750
+  BCNF-Index: median=15.412260s compression=0.750
+A_conflict_ratio: conflict_ratio=0.4 seed=1
+  FD-Hash: median=22.389501s compression=0.750
+  BCNF-Index: median=28.113283s compression=0.750
+A_conflict_ratio: conflict_ratio=0.4 seed=2
+  FD-Hash: median=21.971222s compression=0.750
+  BCNF-Index: median=27.859660s compression=0.750
+A_conflict_ratio: conflict_ratio=0.4 seed=3
+  FD-Hash: median=22.000626s compression=0.750
+  BCNF-Index: median=28.047664s compression=0.750
+A_conflict_ratio: conflict_ratio=0.4 seed=4
+  FD-Hash: median=21.820115s compression=0.750
+  BCNF-Index: median=28.125293s compression=0.750
+A_conflict_ratio: conflict_ratio=0.4 seed=5
+  FD-Hash: median=21.761691s compression=0.750
+  BCNF-Index: median=28.142954s compression=0.750
+B_fd_count: fd_count=1 seed=1
+  FD-Hash: median=6.203861s compression=0.000
+  BCNF-Index: median=9.120571s compression=0.000
+B_fd_count: fd_count=1 seed=2
+  FD-Hash: median=6.265267s compression=0.000
+  BCNF-Index: median=9.092663s compression=0.000
+B_fd_count: fd_count=1 seed=3
+  FD-Hash: median=6.178829s compression=0.000
+  BCNF-Index: median=9.111521s compression=0.000
+B_fd_count: fd_count=1 seed=4
+  FD-Hash: median=6.295358s compression=0.000
+  BCNF-Index: median=9.160421s compression=0.000
+B_fd_count: fd_count=1 seed=5
+  FD-Hash: median=6.320390s compression=0.000
+  BCNF-Index: median=9.129746s compression=0.000
+B_fd_count: fd_count=2 seed=1
+  FD-Hash: median=10.542211s compression=0.500
+  BCNF-Index: median=9.186953s compression=0.500
+B_fd_count: fd_count=2 seed=2
+  FD-Hash: median=10.503029s compression=0.500
+  BCNF-Index: median=9.120465s compression=0.500
+B_fd_count: fd_count=2 seed=3
+  FD-Hash: median=10.522551s compression=0.500
+  BCNF-Index: median=9.185936s compression=0.500
+B_fd_count: fd_count=2 seed=4
+  FD-Hash: median=10.617404s compression=0.500
+  BCNF-Index: median=9.226672s compression=0.500
+B_fd_count: fd_count=2 seed=5
+  FD-Hash: median=10.556068s compression=0.500
+  BCNF-Index: median=9.177617s compression=0.500
+B_fd_count: fd_count=4 seed=1
+  FD-Hash: median=19.387401s compression=0.750
+  BCNF-Index: median=9.047872s compression=0.750
+B_fd_count: fd_count=4 seed=2
+  FD-Hash: median=19.403860s compression=0.750
+  BCNF-Index: median=9.129117s compression=0.750
+B_fd_count: fd_count=4 seed=3
+  FD-Hash: median=19.404337s compression=0.750
+  BCNF-Index: median=9.201333s compression=0.750
+B_fd_count: fd_count=4 seed=4
+  FD-Hash: median=19.367770s compression=0.750
+  BCNF-Index: median=9.154280s compression=0.750
+B_fd_count: fd_count=4 seed=5
+  FD-Hash: median=19.633284s compression=0.750
+  BCNF-Index: median=9.197275s compression=0.750
+B_fd_count: fd_count=8 seed=1
+  FD-Hash: median=36.957486s compression=0.875
+  BCNF-Index: median=9.064100s compression=0.875
+B_fd_count: fd_count=8 seed=2
+  FD-Hash: median=36.855581s compression=0.875
+  BCNF-Index: median=9.098252s compression=0.875
+B_fd_count: fd_count=8 seed=3
+  FD-Hash: median=36.873170s compression=0.875
+  BCNF-Index: median=9.057799s compression=0.875
+B_fd_count: fd_count=8 seed=4
+  FD-Hash: median=36.753578s compression=0.875
+  BCNF-Index: median=9.081591s compression=0.875
+B_fd_count: fd_count=8 seed=5
+  FD-Hash: median=36.886823s compression=0.875
+  BCNF-Index: median=9.121059s compression=0.875
+B_fd_count: fd_count=16 seed=1
+  FD-Hash: median=69.494478s compression=0.933
+  BCNF-Index: median=9.179567s compression=0.933
+B_fd_count: fd_count=16 seed=2
+  FD-Hash: median=69.435635s compression=0.933
+  BCNF-Index: median=9.161179s compression=0.933
+B_fd_count: fd_count=16 seed=3
+  FD-Hash: median=69.278247s compression=0.933
+  BCNF-Index: median=9.106168s compression=0.933
+B_fd_count: fd_count=16 seed=4
+  FD-Hash: median=69.450988s compression=0.933
+  BCNF-Index: median=9.058396s compression=0.933
+B_fd_count: fd_count=16 seed=5
+  FD-Hash: median=69.730923s compression=0.933
+  BCNF-Index: median=9.148335s compression=0.933
+C_key_width: key_width=1 seed=1
+  FD-Hash: median=19.538995s compression=0.750
+  BCNF-Index: median=9.205042s compression=0.750
+C_key_width: key_width=1 seed=2
+  FD-Hash: median=19.387454s compression=0.750
+  BCNF-Index: median=9.136210s compression=0.750
+C_key_width: key_width=1 seed=3
+  FD-Hash: median=19.567768s compression=0.750
+  BCNF-Index: median=9.120031s compression=0.750
+C_key_width: key_width=1 seed=4
+  FD-Hash: median=19.726516s compression=0.750
+  BCNF-Index: median=9.192382s compression=0.750
+C_key_width: key_width=1 seed=5
+  FD-Hash: median=19.594034s compression=0.750
+  BCNF-Index: median=9.154593s compression=0.750
+C_key_width: key_width=2 seed=1
+  FD-Hash: median=19.783546s compression=0.750
+  BCNF-Index: median=8.725767s compression=0.750
+C_key_width: key_width=2 seed=2
+  FD-Hash: median=19.790929s compression=0.750
+  BCNF-Index: median=8.650199s compression=0.750
+C_key_width: key_width=2 seed=3
+  FD-Hash: median=19.735404s compression=0.750
+  BCNF-Index: median=8.742578s compression=0.750
+C_key_width: key_width=2 seed=4
+  FD-Hash: median=19.599294s compression=0.750
+  BCNF-Index: median=8.600360s compression=0.750
+C_key_width: key_width=2 seed=5
+  FD-Hash: median=19.746307s compression=0.750
+  BCNF-Index: median=8.655174s compression=0.750
+C_key_width: key_width=4 seed=1
+  FD-Hash: median=20.291509s compression=0.750
+  BCNF-Index: median=7.842334s compression=0.750
+C_key_width: key_width=4 seed=2
+  FD-Hash: median=20.286769s compression=0.750
+  BCNF-Index: median=7.776540s compression=0.750
+C_key_width: key_width=4 seed=3
+  FD-Hash: median=20.382222s compression=0.750
+  BCNF-Index: median=7.759940s compression=0.750
+C_key_width: key_width=4 seed=4
+  FD-Hash: median=20.492866s compression=0.750
+  BCNF-Index: median=7.715853s compression=0.750
+C_key_width: key_width=4 seed=5
+  FD-Hash: median=20.322590s compression=0.750
+  BCNF-Index: median=7.816260s compression=0.750
+Wrote results\sensitivity.csv (650 rows)

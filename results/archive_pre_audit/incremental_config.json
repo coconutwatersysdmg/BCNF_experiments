@@ -1,0 +1,32 @@
+{
+  "timestamp_utc": "2026-08-13T18:11:05.244642+00:00",
+  "config": {
+    "n": 1000000,
+    "conflict_ratio": 0.1,
+    "updates": 10000,
+    "batch_sizes": [
+      1,
+      10,
+      100,
+      1000,
+      10000
+    ],
+    "seed": null,
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "distribution": null,
+    "distributions": [
+      "uniform",
+      "zipf"
+    ],
+    "max_batches": 50,
+    "key_width": 1,
+    "fd_count": 4,
+    "out": "results\\incremental.csv"
+  }
+}

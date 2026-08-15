@@ -1,0 +1,8 @@
+{
+  "timestamp_utc": "2026-08-13T12:02:18.604297+00:00",
+  "config": {
+    "cases": 1000,
+    "max_deleted": 15,
+    "seed": 42
+  }
+}

@@ -1,0 +1,11 @@
+﻿__pycache__/
+*.pyc
+.pytest_cache/
+.vscode/
+data/llm_qa/
+results/*.csv
+results/*.json
+results/*.log
+!results/archive_pre_audit/
+!results/final/.gitkeep
+!results/.gitkeep
