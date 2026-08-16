@@ -18,17 +18,23 @@ from algorithms.fd_hash import is_subset_repair_fd_hash
 from algorithms.singleton_fullscan import is_subset_repair_singleton_fullscan
 from common.io_utils import write_csv
 from common.metrics import measure_resources, summarize_runs
-from common.reproducibility import set_global_seed, snapshot_config
-from config import DEFAULT_TIMEOUT_SEC, RESULTS_DIR
+from common.reproducibility import get_code_version, set_global_seed, snapshot_config
+from config import DEFAULT_TIMEOUT_SEC, FINAL_RESULTS_DIR
 from generators.conflict_injector import make_negative_repair_case, make_positive_repair_case
 from generators.instance_generator import generate_clean_instance
 from generators.schema_generator import generate_single_key_bcnf
 
 
+def _bcnf(schema, r, r_prime):
+    return is_subset_repair_bcnf_index(
+        schema, r, r_prime, use_key_cover=False, collect_certificates=False
+    )
+
+
 ALGORITHMS: dict[str, Callable[..., Any]] = {
     "Singleton-FullScan": is_subset_repair_singleton_fullscan,
     "FD-Hash": is_subset_repair_fd_hash,
-    "BCNF-Index": is_subset_repair_bcnf_index,
+    "BCNF-Index": _bcnf,
 }
 
 
@@ -46,7 +52,11 @@ def _worker_from_spec(spec: dict[str, Any], q: "mp.Queue[Any]") -> None:
         )
         if spec["case_type"] == "pass":
             inst = make_positive_repair_case(
-                schema, clean, conflict_ratio=float(spec["conflict_ratio"]), seed=int(spec["seed"]) + 11
+                schema,
+                clean,
+                conflict_ratio=float(spec["conflict_ratio"]),
+                seed=int(spec["seed"]) + 11,
+                block_distribution=str(spec.get("block_distribution", "uniform")),
             )
         else:
             inst = make_negative_repair_case(
@@ -55,6 +65,7 @@ def _worker_from_spec(spec: dict[str, Any], q: "mp.Queue[Any]") -> None:
                 conflict_ratio=float(spec["conflict_ratio"]),
                 seed=int(spec["seed"]) + 11,
                 addable_position=0.9,
+                block_distribution=str(spec.get("block_distribution", "uniform")),
             )
         fn = ALGORITHMS[str(spec["algo"])]
         with measure_resources(track_memory=True) as mem:
@@ -71,6 +82,9 @@ def _worker_from_spec(spec: dict[str, Any], q: "mp.Queue[Any]") -> None:
                     "index_count": result.index_count,
                     "python_peak_mb": mem["python_peak_mb"],
                     "rss_peak_mb": mem["rss_peak_mb"],
+                    "r_size": len(inst.r),
+                    "r_prime_size": len(inst.r_prime),
+                    "deleted_count": len(inst.deleted_rows),
                 },
             )
         )
@@ -99,12 +113,23 @@ def run_with_hard_timeout(spec: dict[str, Any], timeout_sec: float):
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Static S-repair scalability benchmark")
-    parser.add_argument("--sizes", type=int, nargs="+", default=[1000, 10000, 100000, 1000000])
+    parser.add_argument(
+        "--sizes",
+        type=int,
+        nargs="+",
+        default=[1000, 10000, 100000, 1000000],
+        help="base_clean_size values (= |r'| before conflict injection)",
+    )
     parser.add_argument("--conflict-ratio", type=float, default=0.1)
     parser.add_argument("--fd-count", type=int, default=4)
     parser.add_argument("--key-width", type=int, default=1)
     parser.add_argument("--seeds", type=int, nargs="+", default=[1, 2, 3, 4, 5])
-    parser.add_argument("--case", choices=["pass", "fail", "both"], default="both")
+    parser.add_argument(
+        "--case",
+        choices=["pass", "fail", "both"],
+        default="pass",
+        help="Main scalability uses PASS only; FAIL is optional supplement",
+    )
     parser.add_argument("--warmup", type=int, default=1)
     parser.add_argument("--repeats", type=int, default=5)
     parser.add_argument("--timeout", type=float, default=DEFAULT_TIMEOUT_SEC)
@@ -122,18 +147,37 @@ def main() -> int:
     )
     parser.add_argument("--n-attrs", type=int, default=8)
     parser.add_argument("--skew", type=str, default="uniform")
-    parser.add_argument("--out", type=Path, default=RESULTS_DIR / "static.csv")
+    parser.add_argument("--block-distribution", type=str, default="uniform")
+    parser.add_argument("--out", type=Path, default=FINAL_RESULTS_DIR / "static.csv")
+    parser.add_argument(
+        "--config-out",
+        type=Path,
+        default=FINAL_RESULTS_DIR / "static_config.json",
+    )
     args = parser.parse_args()
 
+    code_version = get_code_version()
     set_global_seed(args.seeds[0])
-    snapshot_config(RESULTS_DIR / "static_config.json", vars(args))
+    snapshot_config(
+        args.config_out,
+        {
+            **vars(args),
+            "code_version": code_version,
+            "n_definition": "CSV n = |r|; --sizes are base_clean_size",
+            "use_key_cover": False,
+            "collect_certificates": False,
+        },
+    )
 
     case_types = ["pass", "fail"] if args.case == "both" else [args.case]
     raw_rows: list[dict[str, Any]] = []
     fieldnames = [
         "algorithm",
         "case_type",
+        "base_clean_size",
         "n",
+        "r_size",
+        "r_prime_size",
         "seed",
         "rep",
         "conflict_ratio",
@@ -149,11 +193,12 @@ def main() -> int:
         "peak_memory_mb",
         "result",
         "timeout",
+        "code_version",
     ]
     # Once Singleton times out at size n, skip it for all larger sizes.
     singleton_skip_from_n: Optional[int] = None
 
-    for n in args.sizes:
+    for base_n in args.sizes:
         for seed in args.seeds:
             schema = generate_single_key_bcnf(
                 n_attrs=args.n_attrs,
@@ -161,12 +206,16 @@ def main() -> int:
                 fd_count=args.fd_count,
                 seed=seed,
             )
-            print(f"Generating n={n} seed={seed} ...", flush=True)
-            clean = generate_clean_instance(schema, n=n, seed=seed, skew=args.skew)
+            print(f"Generating base_clean_size={base_n} seed={seed} ...", flush=True)
+            clean = generate_clean_instance(schema, n=base_n, seed=seed, skew=args.skew)
             for case_type in case_types:
                 if case_type == "pass":
                     inst = make_positive_repair_case(
-                        schema, clean, conflict_ratio=args.conflict_ratio, seed=seed + 11
+                        schema,
+                        clean,
+                        conflict_ratio=args.conflict_ratio,
+                        seed=seed + 11,
+                        block_distribution=args.block_distribution,
                     )
                 else:
                     inst = make_negative_repair_case(
@@ -175,20 +224,27 @@ def main() -> int:
                         conflict_ratio=args.conflict_ratio,
                         seed=seed + 11,
                         addable_position=0.9,
+                        block_distribution=args.block_distribution,
                     )
+                r_size = len(inst.r)
+                r_prime_size = len(inst.r_prime)
                 deleted_count = len(inst.deleted_rows)
 
                 for algo in args.algorithms:
+                    # Singleton: only try up to 1e5 by default policy of Phase 11
                     if (
                         algo == "Singleton-FullScan"
                         and singleton_skip_from_n is not None
-                        and n >= singleton_skip_from_n
+                        and base_n >= singleton_skip_from_n
                     ):
                         raw_rows.append(
                             {
                                 "algorithm": algo,
                                 "case_type": case_type,
-                                "n": n,
+                                "base_clean_size": base_n,
+                                "n": r_size,
+                                "r_size": r_size,
+                                "r_prime_size": r_prime_size,
                                 "seed": seed,
                                 "rep": 0,
                                 "conflict_ratio": args.conflict_ratio,
@@ -204,10 +260,12 @@ def main() -> int:
                                 "peak_memory_mb": "",
                                 "result": "",
                                 "timeout": True,
+                                "code_version": code_version,
                             }
                         )
                         print(
-                            f"n={n} seed={seed} {case_type} {algo}: SKIP(timeout@>={singleton_skip_from_n})",
+                            f"n={r_size} seed={seed} {case_type} {algo}: "
+                            f"SKIP(timeout@>={singleton_skip_from_n})",
                             flush=True,
                         )
                         continue
@@ -229,7 +287,7 @@ def main() -> int:
                         if use_hard:
                             spec = {
                                 "algo": algo,
-                                "n": n,
+                                "n": base_n,
                                 "seed": seed,
                                 "n_attrs": args.n_attrs,
                                 "key_width": args.key_width,
@@ -237,6 +295,7 @@ def main() -> int:
                                 "skew": args.skew,
                                 "conflict_ratio": args.conflict_ratio,
                                 "case_type": case_type,
+                                "block_distribution": args.block_distribution,
                             }
                             out, is_timeout = run_with_hard_timeout(spec, args.timeout)
                         else:
@@ -259,12 +318,15 @@ def main() -> int:
                         if is_timeout:
                             timed_out = True
                             if algo == "Singleton-FullScan":
-                                singleton_skip_from_n = n
+                                singleton_skip_from_n = base_n
                             raw_rows.append(
                                 {
                                     "algorithm": algo,
                                     "case_type": case_type,
-                                    "n": n,
+                                    "base_clean_size": base_n,
+                                    "n": r_size,
+                                    "r_size": r_size,
+                                    "r_prime_size": r_prime_size,
                                     "seed": seed,
                                     "rep": rep,
                                     "conflict_ratio": args.conflict_ratio,
@@ -280,18 +342,33 @@ def main() -> int:
                                     "peak_memory_mb": "",
                                     "result": "",
                                     "timeout": True,
+                                    "code_version": code_version,
                                 }
                             )
                             break
 
                         assert out is not None
+                        # PASS correctness gate for FD-Hash / BCNF
+                        if case_type == "pass" and algo in ("FD-Hash", "BCNF-Index"):
+                            if not out["is_repair"] or not out["candidate_consistent"]:
+                                print(
+                                    f"CORRECTNESS FAIL: {algo} on PASS case "
+                                    f"base_n={base_n} seed={seed}",
+                                    file=sys.stderr,
+                                )
+                                write_csv(args.out, fieldnames, raw_rows)
+                                return 1
+
                         last_payload = out
                         times.append(float(out["total_time_sec"]))
                         raw_rows.append(
                             {
                                 "algorithm": algo,
                                 "case_type": case_type,
-                                "n": n,
+                                "base_clean_size": base_n,
+                                "n": r_size,
+                                "r_size": r_size,
+                                "r_prime_size": r_prime_size,
                                 "seed": seed,
                                 "rep": rep,
                                 "conflict_ratio": args.conflict_ratio,
@@ -309,24 +386,24 @@ def main() -> int:
                                 "peak_memory_mb": out["python_peak_mb"],
                                 "result": out["is_repair"],
                                 "timeout": False,
+                                "code_version": code_version,
                             }
                         )
 
                     if times and not timed_out:
                         summary = summarize_runs(times)
                         print(
-                            f"n={n} seed={seed} {case_type} {algo}: "
+                            f"|r|={r_size} seed={seed} {case_type} {algo}: "
                             f"median={summary['median']:.6f}s "
                             f"result={last_payload['is_repair'] if last_payload else None}",
                             flush=True,
                         )
                     elif timed_out:
                         print(
-                            f"n={n} seed={seed} {case_type} {algo}: TIMEOUT",
+                            f"|r|={r_size} seed={seed} {case_type} {algo}: TIMEOUT",
                             flush=True,
                         )
 
-                # Checkpoint after each (n, seed, case)
                 write_csv(args.out, fieldnames, raw_rows)
 
     write_csv(args.out, fieldnames, raw_rows)

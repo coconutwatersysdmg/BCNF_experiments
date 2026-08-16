@@ -29,18 +29,23 @@ SENSITIVITY_N = 1_000_000
 SENSITIVITY_CONFLICT_RATIOS = (0.01, 0.05, 0.10, 0.20, 0.40)
 SENSITIVITY_FD_COUNTS = (1, 2, 4, 8, 16)
 SENSITIVITY_KEY_WIDTHS = (1, 2, 4)
-SENSITIVITY_SKEWS = ("uniform", "zipf_0.5", "zipf_1.0", "zipf_1.5")
+SENSITIVITY_SKEWS = ("uniform", "zipf_0.5", "zipf_1.0", "zipf_1.5")  # legacy
+SENSITIVITY_BLOCK_DISTRIBUTIONS = ("uniform", "zipf_1.2")
 
 # Incremental defaults
-INCREMENTAL_BATCH_SIZES = (1, 10, 100, 1_000, 10_000)
+INCREMENTAL_BATCH_SIZES = (1, 10, 100, 1_000)
+
+# Final audit output (do not overwrite results/*.csv)
+FINAL_RESULTS_DIR = RESULTS_DIR / "final"
 
 # LLM QA defaults
 LLM_TEMPERATURE = 0.0
 LLM_MAX_TOKENS = 64
-QA_TARGET_COUNT = 900
+QA_TARGET_COUNT = 1200
 QA_CATEGORY_RATIOS = {
     "No-Conflict": 0.30,
     "Irrelevant-Conflict": 0.30,
     "Answer-Critical-Conflict": 0.40,
 }
 CANDIDATE_ERROR_RATIOS = (0.01, 0.05, 0.10, 0.20)
+

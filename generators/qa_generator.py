@@ -334,6 +334,62 @@ def generate_qa_dataset(
     return [it.to_json() for it in items]
 
 
+def complete_by_checker(
+    schema: RelationSchema,
+    r: Sequence[Row],
+    r_prime: Sequence[Row],
+    max_iters: int = 1000,
+) -> dict[str, Any]:
+    """Restore S-repair maximality for over-deletion candidates.
+
+    Does NOT resolve residual conflicts (cannot choose real-world truth).
+    If candidate_consistent=False, stops immediately (gate path).
+    """
+    checker = BCNFRepairChecker(schema, use_key_cover=False)
+    current = set(r_prime)
+    universe = set(r)
+    added: list[Row] = []
+    iterations = 0
+    last = None
+    for iterations in range(1, max_iters + 1):
+        last = checker.check(
+            list(universe), list(current), collect_certificates=False
+        )
+        if not last.candidate_consistent:
+            return {
+                "r_prime": list(current),
+                "final_is_repair": False,
+                "candidate_consistent": False,
+                "checker_rejected": True,
+                "number_of_checker_iterations": iterations,
+                "added_back_count": len(added),
+                "added_back": added,
+            }
+        if last.is_repair:
+            return {
+                "r_prime": list(current),
+                "final_is_repair": True,
+                "candidate_consistent": True,
+                "checker_rejected": False,
+                "number_of_checker_iterations": iterations,
+                "added_back_count": len(added),
+                "added_back": added,
+            }
+        if last.addable_tuple is None:
+            break
+        current.add(last.addable_tuple)
+        added.append(last.addable_tuple)
+    return {
+        "r_prime": list(current),
+        "final_is_repair": bool(last.is_repair) if last else False,
+        "candidate_consistent": bool(last.candidate_consistent) if last else False,
+        "checker_rejected": bool(last and not last.candidate_consistent),
+        "number_of_checker_iterations": iterations,
+        "added_back_count": len(added),
+        "added_back": added,
+    }
+
+
 def inject_candidate_repair_errors(
     schema: RelationSchema,
     r: Sequence[Row],
@@ -341,27 +397,37 @@ def inject_candidate_repair_errors(
     error_ratio: float,
     seed: int,
     clean_gt: Sequence[Row],
+    error_type: str = "mixed",
 ) -> dict[str, Any]:
-    """Inject residual_conflict and over_deletion into an otherwise valid repair.
+    """Inject residual_conflict and/or over_deletion into a valid S-repair.
 
-    Returns candidate and checked repairs. Clean GT is used ONLY for
-    experimental construction/correction — never leaked to the checker input
-    beyond what the candidate already contains.
+    clean_gt is used ONLY to choose which tuples to over-delete for the
+    experiment design (prefer answer-critical clean rows). It is NEVER used
+    by the checker to pick a 'true' residual conflict survivor.
+
+    error_type:
+      - over_deletion: only over-delete; checked path uses complete_by_checker
+      - residual_conflict: only inject conflicting twins; checked path = gate reject
+      - mixed: both (legacy artifact generation)
     """
     rng = random.Random(seed)
     r_set = set(r)
     cand = list(r_prime)
-    cand_set = set(cand)
-    D = list(r_set - cand_set)
+    D = list(r_set - set(cand))
 
     n_err = max(1, int(round(len(cand) * error_ratio))) if cand else 0
-    n_residual = n_err // 2
-    n_over = n_err - n_residual
+    if error_type == "over_deletion":
+        n_residual, n_over = 0, n_err
+    elif error_type == "residual_conflict":
+        n_residual, n_over = n_err, 0
+    else:
+        n_residual = n_err // 2
+        n_over = n_err - n_residual
 
-    residual_injected = []
-    over_deleted = []
+    residual_injected: list[Row] = []
+    over_deleted: list[Row] = []
 
-    # residual_conflict: add a conflicting twin into candidate
+    # residual_conflict: keep two conflicting tuples in candidate
     for i in range(n_residual):
         if not cand:
             break
@@ -371,12 +437,10 @@ def inject_candidate_repair_errors(
         r_set.add(twin)
         residual_injected.append(twin)
 
-    cand_set = set(cand)
-
     # over_deletion: remove a keepable tuple from candidate into D
-    for i in range(n_over):
-        # Prefer tuples that exist in clean_gt and are currently retained
-        keepable = [t for t in cand if t in set(clean_gt)]
+    clean_set = set(clean_gt)
+    for _i in range(n_over):
+        keepable = [t for t in cand if t in clean_set]
         if not keepable:
             if len(cand) <= 1:
                 break
@@ -389,54 +453,44 @@ def inject_candidate_repair_errors(
     candidate_r = tuple(r_set)
     candidate_rp = tuple(cand)
 
-    # Checker sees only candidate (no clean GT leakage)
-    checker = BCNFRepairChecker(schema)
-    check_res = checker.check(candidate_r, candidate_rp)
+    checker = BCNFRepairChecker(schema, use_key_cover=False)
+    check_res = checker.check(
+        candidate_r, candidate_rp, collect_certificates=False
+    )
 
-    # Deterministic correction -> Checked-Repair
-    checked_rp = set(candidate_rp)
-    checked_r = set(candidate_r)
-
-    # Fix residual conflicts using clean GT selection when available
-    attr_to_idx = schema.attr_to_idx
-    key = schema.candidate_keys[0] if schema.candidate_keys else None
-    if key is not None and not check_res.candidate_consistent:
-        # Group by key; prefer clean GT row when present
-        groups: dict[tuple, list[Row]] = {}
-        for row in list(checked_rp):
-            kv = project_row(row, key, attr_to_idx)
-            groups.setdefault(kv, []).append(row)
-        clean_by_key = {project_row(row, key, attr_to_idx): row for row in clean_gt}
-        new_rp = set()
-        for kv, rows in groups.items():
-            if len(rows) == 1:
-                new_rp.add(rows[0])
-            else:
-                if kv in clean_by_key and clean_by_key[kv] in rows:
-                    chosen = clean_by_key[kv]
-                else:
-                    chosen = sorted(rows, key=lambda x: repr(x))[0]
-                new_rp.add(chosen)
-                for extra in rows:
-                    if extra != chosen:
-                        # move to deleted side of universe
-                        checked_r.add(extra)
-        checked_rp = new_rp
-
-    # Fix over-deletion: add back checker-reported addable tuple(s)
-    # Re-check and iteratively add addable tuples (deterministic)
-    max_fix_iters = 100
-    for _ in range(max_fix_iters):
-        res2 = BCNFRepairChecker(schema).check(list(checked_r), list(checked_rp))
-        if res2.is_repair:
-            break
-        if not res2.candidate_consistent:
-            break
-        if res2.addable_tuple is None:
-            break
-        checked_rp.add(res2.addable_tuple)
-
-    final_check = BCNFRepairChecker(schema).check(list(checked_r), list(checked_rp))
+    # Checked path depends on error type — never use clean GT to resolve conflicts
+    if residual_injected and not check_res.candidate_consistent:
+        # Gate only: reject inconsistent candidate; do not invent truth
+        checked = {
+            "r": list(candidate_r),
+            "r_prime": list(candidate_rp),
+            "is_repair": False,
+            "candidate_consistent": False,
+            "checker_rejected": True,
+            "number_of_checker_iterations": 1,
+            "added_back_count": 0,
+        }
+    elif over_deleted:
+        completion = complete_by_checker(schema, candidate_r, candidate_rp)
+        checked = {
+            "r": list(candidate_r),
+            "r_prime": completion["r_prime"],
+            "is_repair": completion["final_is_repair"],
+            "candidate_consistent": completion["candidate_consistent"],
+            "checker_rejected": completion["checker_rejected"],
+            "number_of_checker_iterations": completion["number_of_checker_iterations"],
+            "added_back_count": completion["added_back_count"],
+        }
+    else:
+        checked = {
+            "r": list(candidate_r),
+            "r_prime": list(candidate_rp),
+            "is_repair": check_res.is_repair,
+            "candidate_consistent": check_res.candidate_consistent,
+            "checker_rejected": False,
+            "number_of_checker_iterations": 1,
+            "added_back_count": 0,
+        }
 
     return {
         "candidate": {
@@ -445,14 +499,10 @@ def inject_candidate_repair_errors(
             "is_repair": check_res.is_repair,
             "candidate_consistent": check_res.candidate_consistent,
         },
-        "checked": {
-            "r": list(checked_r),
-            "r_prime": list(checked_rp),
-            "is_repair": final_check.is_repair,
-            "candidate_consistent": final_check.candidate_consistent,
-        },
+        "checked": checked,
         "errors": {
             "error_ratio": error_ratio,
+            "error_type": error_type,
             "residual_injected": len(residual_injected),
             "over_deleted": len(over_deleted),
         },

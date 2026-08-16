@@ -23,7 +23,9 @@ def is_subset_repair_singleton_fullscan(
 ) -> RepairCheckResult:
     """Check S-repair by testing each deleted tuple alone against full F."""
     t0 = time.perf_counter()
+    t_val0 = time.perf_counter()
     ensure_subset(r, r_prime)
+    validation_t = time.perf_counter() - t_val0
     attr_to_idx = schema.attr_to_idx
     fds = schema.fds
 
@@ -34,13 +36,21 @@ def is_subset_repair_singleton_fullscan(
             candidate_consistent=False,
             check_time_sec=total,
             total_time_sec=total,
-            metadata={"algorithm": "Singleton-FullScan", "reason": "r_prime_inconsistent"},
+            metadata={
+                "algorithm": "Singleton-FullScan",
+                "reason": "r_prime_inconsistent",
+                "validation_time_sec": validation_t,
+            },
         )
 
     r_prime_list = list(r_prime)
-    d = frozenset(r) - frozenset(r_prime)
     t_check0 = time.perf_counter()
-    for t in d:
+    r_prime_set = set(r_prime)
+    deleted_count = 0
+    for t in r:
+        if t in r_prime_set:
+            continue
+        deleted_count += 1
         candidate = r_prime_list + [t]
         if satisfies_fds(candidate, fds, attr_to_idx):
             check_t = time.perf_counter() - t_check0
@@ -52,7 +62,11 @@ def is_subset_repair_singleton_fullscan(
                 witness_addable_subset=(t,),
                 check_time_sec=check_t,
                 total_time_sec=total,
-                metadata={"algorithm": "Singleton-FullScan"},
+                metadata={
+                    "algorithm": "Singleton-FullScan",
+                    "validation_time_sec": validation_t,
+                    "deleted_count": deleted_count,
+                },
             )
 
     check_t = time.perf_counter() - t_check0
@@ -62,5 +76,9 @@ def is_subset_repair_singleton_fullscan(
         candidate_consistent=True,
         check_time_sec=check_t,
         total_time_sec=total,
-        metadata={"algorithm": "Singleton-FullScan", "deleted_count": len(d)},
+        metadata={
+            "algorithm": "Singleton-FullScan",
+            "validation_time_sec": validation_t,
+            "deleted_count": deleted_count,
+        },
     )

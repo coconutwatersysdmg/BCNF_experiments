@@ -1,0 +1,33 @@
+{
+  "timestamp_utc": "2026-08-15T15:05:08.347059+00:00",
+  "config": {
+    "sizes": [
+      1000,
+      10000
+    ],
+    "conflict_ratio": 0.1,
+    "fd_count": 4,
+    "key_width": 1,
+    "seeds": [
+      1
+    ],
+    "case": "pass",
+    "warmup": 1,
+    "repeats": 1,
+    "timeout": 600.0,
+    "hard_timeout": false,
+    "algorithms": [
+      "FD-Hash",
+      "BCNF-Index"
+    ],
+    "n_attrs": 8,
+    "skew": "uniform",
+    "block_distribution": "uniform",
+    "out": "results\\final\\static_smoke.csv",
+    "config_out": "results\\final\\static_smoke_config.json",
+    "code_version": "68869e6",
+    "n_definition": "CSV n = |r|; --sizes are base_clean_size",
+    "use_key_cover": false,
+    "collect_certificates": false
+  }
+}

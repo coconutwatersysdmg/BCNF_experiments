@@ -1,0 +1,9 @@
+{
+  "timestamp_utc": "2026-08-15T14:41:06.797532+00:00",
+  "config": {
+    "cases": 2000,
+    "max_deleted": 15,
+    "seed": 42,
+    "code_version": "68869e6"
+  }
+}

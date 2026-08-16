@@ -1,0 +1,9 @@
+{
+  "timestamp_utc": "2026-08-15T15:03:23.263544+00:00",
+  "config": {
+    "which": "A",
+    "out_a": "E:\\Homework\\1研究生课程\\AAA小论文\\A论文编写\\计算机研究与发展\\experiments\\results\\final\\diagnostic_A.csv",
+    "out_b": "E:\\Homework\\1研究生课程\\AAA小论文\\A论文编写\\计算机研究与发展\\experiments\\results\\final\\diagnostic_B.csv",
+    "code_version": "68869e6"
+  }
+}

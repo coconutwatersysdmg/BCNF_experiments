@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import random
 from typing import Any, Optional, Sequence
 
@@ -71,6 +72,107 @@ def _fresh_tuple(
     return t
 
 
+def _allocate_counts(
+    d: int,
+    B: int,
+    distribution: str,
+    zipf_alpha: float,
+) -> list[int]:
+    """Allocate d deleted conflicts across B active blocks (each >= 1 when d >= B)."""
+    if d <= 0 or B <= 0:
+        return []
+    B = min(B, d)
+    if distribution == "uniform":
+        base = d // B
+        rem = d % B
+        return [base + (1 if i < rem else 0) for i in range(B)]
+
+    # Zipf: weight_i ∝ 1 / (i+1)^alpha
+    weights = [1.0 / ((i + 1) ** zipf_alpha) for i in range(B)]
+    total_w = sum(weights)
+    # Ensure each active block gets ≥1, then distribute remainder by Zipf
+    counts = [1] * B
+    rem = d - B
+    if rem > 0:
+        # Proportional allocation of remainder
+        raw = [rem * (w / total_w) for w in weights]
+        extras = [int(math.floor(x)) for x in raw]
+        leftover = rem - sum(extras)
+        order = sorted(range(B), key=lambda i: -(raw[i] - extras[i]))
+        for i in range(leftover):
+            extras[order[i]] += 1
+        counts = [1 + extras[i] for i in range(B)]
+    return counts
+
+
+def compute_deleted_block_stats(
+    schema: RelationSchema,
+    r_prime: Sequence[Row],
+    deleted: Sequence[Row],
+    index_keys: Optional[Sequence[tuple[str, ...]]] = None,
+) -> dict[str, Any]:
+    """Statistics of deleted conflict block sizes |G_K(v)| under primary index key.
+
+    Uses index_keys[0] (paper single-key experiments); for multi-key schemas the
+    first selected candidate key defines the reported block distribution.
+    """
+    if index_keys is None:
+        index_keys = select_index_keys(schema, use_key_cover=False)
+    if not index_keys:
+        return {
+            "active_block_count": 0,
+            "mean_deleted_block_size": 0.0,
+            "median_deleted_block_size": 0.0,
+            "p95_deleted_block_size": 0.0,
+            "p99_deleted_block_size": 0.0,
+            "max_deleted_block_size": 0,
+        }
+    k = index_keys[0]
+    attr_to_idx = schema.attr_to_idx
+    retained_vals = {project_row(s, k, attr_to_idx) for s in r_prime}
+    sizes: dict[tuple[Any, ...], int] = {}
+    for t in deleted:
+        kv = project_row(t, k, attr_to_idx)
+        if kv in retained_vals:
+            sizes[kv] = sizes.get(kv, 0) + 1
+    vals = sorted(sizes.values())
+    if not vals:
+        return {
+            "active_block_count": 0,
+            "mean_deleted_block_size": 0.0,
+            "median_deleted_block_size": 0.0,
+            "p95_deleted_block_size": 0.0,
+            "p99_deleted_block_size": 0.0,
+            "max_deleted_block_size": 0,
+        }
+
+    def _pct(p: float) -> float:
+        if len(vals) == 1:
+            return float(vals[0])
+        idx = (len(vals) - 1) * (p / 100.0)
+        lo = int(math.floor(idx))
+        hi = min(lo + 1, len(vals) - 1)
+        if lo == hi:
+            return float(vals[lo])
+        frac = idx - lo
+        return float(vals[lo] + (vals[hi] - vals[lo]) * frac)
+
+    mid = len(vals) // 2
+    if len(vals) % 2 == 1:
+        median = float(vals[mid])
+    else:
+        median = 0.5 * (vals[mid - 1] + vals[mid])
+
+    return {
+        "active_block_count": len(vals),
+        "mean_deleted_block_size": float(sum(vals)) / len(vals),
+        "median_deleted_block_size": median,
+        "p95_deleted_block_size": _pct(95),
+        "p99_deleted_block_size": _pct(99),
+        "max_deleted_block_size": int(vals[-1]),
+    }
+
+
 def make_positive_repair_case(
     schema: RelationSchema,
     r_prime: Sequence[Row],
@@ -78,22 +180,41 @@ def make_positive_repair_case(
     seed: int = 42,
     verify_small: bool = False,
     max_deleted_oracle: int = 15,
+    block_distribution: str = "uniform",
+    zipf_alpha: float = 1.2,
+    active_block_fraction: float = 0.1,
 ) -> RepairInstance:
     """PASS case: all injected deleted tuples conflict with r_prime on some key.
 
-    Final r_prime should be an S-repair of r = r_prime ∪ conflicts.
+    block_distribution controls how deleted conflicts are allocated across
+    retained candidate-key values (uniform vs zipf), NOT update-sampling skew.
     """
     if not (0.0 <= conflict_ratio <= 1.0):
         raise ValueError("conflict_ratio must be in [0,1]")
+    dist = block_distribution.lower().strip()
+    if dist.startswith("zipf"):
+        # accept "zipf", "zipf_1.2"
+        parts = dist.split("_")
+        if len(parts) == 2:
+            try:
+                zipf_alpha = float(parts[1])
+            except ValueError:
+                pass
+        dist = "zipf"
+    elif dist != "uniform":
+        raise ValueError(f"unknown block_distribution: {block_distribution}")
+
     schema.validate_bcnf()
     attr_to_idx = schema.attr_to_idx
     if not satisfies_fds(r_prime, schema.fds, attr_to_idx):
         raise ValueError("r_prime must satisfy F for PASS construction")
 
     rng = random.Random(seed)
-    index_keys = select_index_keys(schema, use_key_cover=True)
+    index_keys = select_index_keys(schema, use_key_cover=False)
     if not index_keys:
         raise ValueError("no index keys available")
+    # Primary key used for conflict injection / block distribution
+    primary_key = index_keys[0]
 
     n = len(r_prime)
     n_conflict = int(round(n * conflict_ratio))
@@ -102,18 +223,33 @@ def make_positive_repair_case(
         n_conflict = max(1, n_conflict)
 
     retained = list(r_prime)
-    if n == 0:
-        deleted: list[Row] = []
-    else:
-        targets = rng.sample(retained, k=min(n_conflict, n))
-        deleted = []
-        for j, s in enumerate(targets):
-            k = index_keys[j % len(index_keys)]
-            t = _mutate_nonkey(schema, s, k, rng, tag=j)
-            # Ensure same key projection
-            assert project_row(t, k, attr_to_idx) == project_row(s, k, attr_to_idx)
-            assert t != s
-            deleted.append(t)
+    deleted: list[Row] = []
+
+    if n > 0 and n_conflict > 0:
+        # Active blocks B must be << d, otherwise uniform/zipf collapse to size-1 blocks.
+        # Default: B ≈ active_block_fraction * d  (mean block size ≈ 1/fraction).
+        # Optional: if active_block_fraction >= 1 treat as fraction of n (legacy brief example),
+        # but clamp so mean size >= 2 whenever d >= 2.
+        if active_block_fraction <= 1.0:
+            B = max(1, int(round(active_block_fraction * n_conflict)))
+        else:
+            B = max(1, int(round(active_block_fraction)))
+        B = min(B, n_conflict, n)
+        if n_conflict >= 2:
+            B = min(B, n_conflict // 2)  # ensure mean size >= 2
+        B = max(1, B)
+        counts = _allocate_counts(n_conflict, B, dist, zipf_alpha)
+        parents = rng.sample(retained, k=len(counts))
+        tag = 0
+        for parent, cnt in zip(parents, counts):
+            for _ in range(cnt):
+                t = _mutate_nonkey(schema, parent, primary_key, rng, tag=tag)
+                assert project_row(t, primary_key, attr_to_idx) == project_row(
+                    parent, primary_key, attr_to_idx
+                )
+                assert t != parent
+                deleted.append(t)
+                tag += 1
 
     r = list(retained) + deleted
     # Set semantics
@@ -123,14 +259,15 @@ def make_positive_repair_case(
         seen = set()
         for i, row in enumerate(r):
             if row in seen:
-                row = row + ("dupfix", i)  # type: ignore[operator]
-                # pad/truncate to schema width — better rebuild last attr
                 vals = list(row[: len(schema.attributes)])
                 vals[-1] = (vals[-1], "dup", i)
                 row = tuple(vals)
             seen.add(row)
             uniq.append(row)
         r = uniq
+        deleted = [row for row in r if row not in set(retained)]
+
+    block_stats = compute_deleted_block_stats(schema, retained, deleted, index_keys)
 
     inst = RepairInstance(
         schema=schema,
@@ -141,6 +278,11 @@ def make_positive_repair_case(
             "conflict_ratio": conflict_ratio,
             "seed": seed,
             "deleted_count": len(deleted),
+            "block_distribution": dist if dist == "uniform" else f"zipf_{zipf_alpha}",
+            "zipf_alpha": zipf_alpha if dist == "zipf" else None,
+            "r_size": len(r),
+            "r_prime_size": len(retained),
+            **block_stats,
         },
     )
 
@@ -162,21 +304,31 @@ def make_negative_repair_case(
     seed: int = 42,
     addable_position: float = 0.9,
     n_addable: int = 1,
+    block_distribution: str = "uniform",
+    zipf_alpha: float = 1.2,
 ) -> RepairInstance:
     """FAIL case: PASS conflicts plus at least one addable fresh tuple.
 
     addable_position in [0,1] places addable tuples late in deleted iteration
     order (default 0.9) so fail benchmarks are not dominated by early exit.
+    Deleted iteration order follows r = retained + deleted_list (stream order).
     """
     if not (0.0 <= addable_position <= 1.0):
         raise ValueError("addable_position must be in [0,1]")
     rng = random.Random(seed)
     base = make_positive_repair_case(
-        schema, r_prime, conflict_ratio=conflict_ratio, seed=seed, verify_small=False
+        schema,
+        r_prime,
+        conflict_ratio=conflict_ratio,
+        seed=seed,
+        verify_small=False,
+        block_distribution=block_distribution,
+        zipf_alpha=zipf_alpha,
     )
-    index_keys = select_index_keys(schema, use_key_cover=True)
+    index_keys = select_index_keys(schema, use_key_cover=False)
     retained = list(base.r_prime)
-    deleted = list(base.deleted_rows)
+    # Preserve generator order (not frozenset): conflicts then addables at position
+    deleted = [t for t in base.r if t not in set(retained)]
 
     addables: list[Row] = []
     for j in range(n_addable):
@@ -206,5 +358,15 @@ def make_negative_repair_case(
             "addable_position": addable_position,
             "deleted_count": len(deleted),
             "n_addable": n_addable,
+            "block_distribution": base.metadata.get("block_distribution", "uniform"),
+            "zipf_alpha": base.metadata.get("zipf_alpha"),
+            "r_size": len(r),
+            "r_prime_size": len(retained),
+            "active_block_count": base.metadata.get("active_block_count"),
+            "mean_deleted_block_size": base.metadata.get("mean_deleted_block_size"),
+            "median_deleted_block_size": base.metadata.get("median_deleted_block_size"),
+            "p95_deleted_block_size": base.metadata.get("p95_deleted_block_size"),
+            "p99_deleted_block_size": base.metadata.get("p99_deleted_block_size"),
+            "max_deleted_block_size": base.metadata.get("max_deleted_block_size"),
         },
     )

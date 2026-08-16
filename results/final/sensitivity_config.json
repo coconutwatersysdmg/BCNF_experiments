@@ -1,0 +1,23 @@
+{
+  "timestamp_utc": "2026-08-16T01:42:17.169685+00:00",
+  "config": {
+    "n": 1000000,
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "repeats": 5,
+    "experiments": [
+      "conflict_ratio",
+      "fd_count",
+      "key_width",
+      "block_distribution"
+    ],
+    "out": "results\\final\\sensitivity.csv",
+    "config_out": "results\\final\\sensitivity_config.json",
+    "code_version": "68869e6"
+  }
+}

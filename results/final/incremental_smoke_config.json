@@ -1,0 +1,32 @@
+{
+  "timestamp_utc": "2026-08-15T15:05:09.025269+00:00",
+  "config": {
+    "n": 10000,
+    "conflict_ratio": 0.1,
+    "batch_sizes": [
+      1,
+      10,
+      100
+    ],
+    "batches_per_config": 5,
+    "seed": null,
+    "seeds": [
+      1
+    ],
+    "block_distributions": [
+      "uniform",
+      "zipf_1.2"
+    ],
+    "workloads": [
+      "d_only",
+      "swap"
+    ],
+    "key_width": 1,
+    "fd_count": 4,
+    "full_equality": true,
+    "out": "results\\final\\incremental_smoke.csv",
+    "config_out": "results\\final\\incremental_smoke_config.json",
+    "code_version": "68869e6",
+    "n_definition": "n = |r| (dirty database size) in CSV; --n is base_clean_size"
+  }
+}

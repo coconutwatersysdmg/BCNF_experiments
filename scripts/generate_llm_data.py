@@ -55,16 +55,28 @@ def main() -> int:
     students = db["STUDENT"]["rows"]
     # Build a valid S-repair scenario on STUDENT
     inst = make_positive_repair_case(schema, students, conflict_ratio=0.05, seed=args.seed)
-    cand_checked = {}
+    cand_checked: dict = {}
     for ratio in (0.01, 0.05, 0.10, 0.20):
-        cand_checked[str(ratio)] = inject_candidate_repair_errors(
-            schema,
-            inst.r,
-            inst.r_prime,
-            error_ratio=ratio,
-            seed=args.seed + int(ratio * 1000),
-            clean_gt=students,
-        )
+        cand_checked[str(ratio)] = {
+            "over_deletion": inject_candidate_repair_errors(
+                schema,
+                inst.r,
+                inst.r_prime,
+                error_ratio=ratio,
+                seed=args.seed + int(ratio * 1000),
+                clean_gt=students,
+                error_type="over_deletion",
+            ),
+            "residual_conflict": inject_candidate_repair_errors(
+                schema,
+                inst.r,
+                inst.r_prime,
+                error_ratio=ratio,
+                seed=args.seed + int(ratio * 2000) + 7,
+                clean_gt=students,
+                error_type="residual_conflict",
+            ),
+        }
     write_json(args.out_dir / "candidate_checked_repairs.json", cand_checked)
     print(f"Wrote candidate/checked repairs for ratios {list(cand_checked)}")
     return 0

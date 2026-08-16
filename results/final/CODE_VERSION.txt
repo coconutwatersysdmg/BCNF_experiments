@@ -1,0 +1,6 @@
+﻿branch=exp-final-audit
+snapshot_commit=d5d1513
+current_commit=68869e699a6b81dc2b2648ff39d81aca2e7d28d8
+code_version=final-audit-v1
+git_short=68869e6
+phase0_completed=true

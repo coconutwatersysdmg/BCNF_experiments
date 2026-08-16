@@ -4,11 +4,29 @@ from __future__ import annotations
 
 import json
 import random
+import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping, Optional
 
 from common.io_utils import ensure_dir, write_json
+
+CODE_VERSION_FALLBACK = "final-audit-v1"
+
+
+def get_code_version() -> str:
+    """Return short git commit hash, or fallback label for final-audit CSVs."""
+    try:
+        root = Path(__file__).resolve().parents[1]
+        out = subprocess.check_output(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=str(root),
+            stderr=subprocess.DEVNULL,
+            text=True,
+        ).strip()
+        return out or CODE_VERSION_FALLBACK
+    except Exception:
+        return CODE_VERSION_FALLBACK
 
 
 def set_global_seed(seed: int) -> random.Random:

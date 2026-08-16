@@ -15,8 +15,8 @@ from algorithms.fd_hash import is_subset_repair_fd_hash
 from algorithms.general import is_subset_repair_exhaustive
 from algorithms.singleton_fullscan import is_subset_repair_singleton_fullscan
 from common.io_utils import write_csv
-from common.reproducibility import set_global_seed, snapshot_config
-from config import RESULTS_DIR
+from common.reproducibility import get_code_version, set_global_seed, snapshot_config
+from config import FINAL_RESULTS_DIR
 from generators.conflict_injector import make_negative_repair_case, make_positive_repair_case
 from generators.instance_generator import generate_clean_instance
 from generators.schema_generator import generate_multi_key_bcnf, generate_single_key_bcnf
@@ -81,14 +81,25 @@ def main() -> int:
     parser.add_argument(
         "--out",
         type=Path,
-        default=RESULTS_DIR / "correctness.csv",
+        default=FINAL_RESULTS_DIR / "correctness.csv",
+    )
+    parser.add_argument(
+        "--config-out",
+        type=Path,
+        default=FINAL_RESULTS_DIR / "correctness_config.json",
     )
     args = parser.parse_args()
 
+    code_version = get_code_version()
     set_global_seed(args.seed)
     snapshot_config(
-        RESULTS_DIR / "correctness_config.json",
-        {"cases": args.cases, "max_deleted": args.max_deleted, "seed": args.seed},
+        args.config_out,
+        {
+            "cases": args.cases,
+            "max_deleted": args.max_deleted,
+            "seed": args.seed,
+            "code_version": code_version,
+        },
     )
 
     n_cases = args.cases
@@ -106,7 +117,9 @@ def main() -> int:
         )
         singleton = is_subset_repair_singleton_fullscan(schema, inst.r, inst.r_prime)
         fd_hash = is_subset_repair_fd_hash(schema, inst.r, inst.r_prime)
-        bcnf = is_subset_repair_bcnf_index(schema, inst.r, inst.r_prime)
+        bcnf = is_subset_repair_bcnf_index(
+            schema, inst.r, inst.r_prime, use_key_cover=False, collect_certificates=False
+        )
 
         flags = {
             "oracle": oracle.is_repair,
@@ -135,6 +148,8 @@ def main() -> int:
                 "case_id": case_id,
                 "seed": args.seed,
                 "n": len(inst.r),
+                "r_size": len(inst.r),
+                "r_prime_size": len(inst.r_prime),
                 "deleted_count": deleted_count,
                 "expected_repair": want_repair,
                 "oracle": oracle.is_repair,
@@ -142,6 +157,7 @@ def main() -> int:
                 "fd_hash": fd_hash.is_repair,
                 "bcnf": bcnf.is_repair,
                 "all_match": all_match,
+                "code_version": code_version,
             }
         )
 
@@ -149,6 +165,8 @@ def main() -> int:
         "case_id",
         "seed",
         "n",
+        "r_size",
+        "r_prime_size",
         "deleted_count",
         "expected_repair",
         "oracle",
@@ -156,6 +174,7 @@ def main() -> int:
         "fd_hash",
         "bcnf",
         "all_match",
+        "code_version",
     ]
     write_csv(args.out, fieldnames, rows)
     print(f"Wrote {args.out}  cases={n_cases} mismatches={mismatches}")

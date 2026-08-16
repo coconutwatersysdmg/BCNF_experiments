@@ -37,8 +37,11 @@ def _rss_mb() -> Optional[float]:
 def measure_resources(track_memory: bool = True) -> Generator[dict[str, Any], None, None]:
     """Context manager recording wall time and peak memory.
 
-    - python_peak_mb: tracemalloc peak (Python allocator)
-    - rss_peak_mb: process RSS via psutil if available
+    - python_peak_mb: tracemalloc peak during THIS context (Python allocator
+      extra allocation; NOT total process physical RAM). Each call resets the
+      peak (or starts a fresh tracemalloc session).
+    - rss_peak_mb: process RSS via psutil if available. Unreliable as a primary
+      paper metric when multiple algorithms share one process (allocator reuse).
     """
     info: dict[str, Any] = {
         "elapsed_sec": 0.0,
