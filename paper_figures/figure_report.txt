@@ -1,0 +1,38 @@
+=== Paper figure generation report ===
+Times New Roman available: True (C:\Windows\Fonts\times.ttf)
+方正书宋 available: False (C:\Windows\Fonts\STSONG.TTF)
+WARNING: 方正书宋 not found. Preview figures use STSong as temporary fallback. 正式投稿前需在安装方正书宋的环境中重新导出图片。
+正式投稿前需在安装方正书宋的环境中重新导出图片。
+static CSV: E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments\results\final\static(new).csv  rows=260
+sensitivity CSV: E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments\results\final\sensitivity(new).csv  rows=750
+incremental CSV: E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments\results\final\incremental(new).csv  rows=8000
+Aggregation: median over seed×rep (or all matching runs); IQR = Q1–Q3
+SINGLE_COLUMN_MM=80.0, DOUBLE_COLUMN_MM=165.0, FIG1_WIDTH_MM=85.0
+Target TIFF dpi=600
+Fig.1 filter: case_type==pass; aggregate median over seed×rep
+Fig.1 rows after filter: 260
+Fig.1 |r|=1.1e6 speedup FD/BCNF = 5.8736x
+Fig.1 saved: E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments\paper_figures\eps\fig1_static_scalability.eps, E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments\paper_figures\tif\fig1_static_scalability.tif, E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments\paper_figures\preview\fig1_static_scalability.png
+Fig.1 TIFF meta: {'mode': 'RGB', 'size': (2003, 1438), 'dpi': (600.0, 600.0), 'compression': 'tiff_lzw'}
+Fig.1 size: 85.0 mm wide
+Fig.1 sanity: PASSED
+Fig.2 filter: experiment==B_fd_count; x=actual_nontrivial_fd_count
+Fig.2 rows: 250
+Fig.2 fd=15 runtime speedup = 21.0735x
+Fig.2 fd=15 memory reduction = 15.6797x
+Fig.2 index compression at fd=15 = 93.33% (15→1)
+Fig.2 saved: E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments\paper_figures\eps\fig2_fd_scaling.eps, E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments\paper_figures\tif\fig2_fd_scaling.tif, E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments\paper_figures\preview\fig2_fd_scaling.png
+Fig.2 TIFF meta: {'mode': 'RGB', 'size': (3867, 1453), 'dpi': (600.0, 600.0), 'compression': 'tiff_lzw'}
+Fig.2 size: 165.0 mm wide
+Fig.2 sanity: PASSED
+Fig.3 filter: workload==swap
+Fig.3 rows: 4000
+Fig.3 Spearman rho uniform=0.967972
+Fig.3 Spearman rho zipf_1.2=0.978795
+Fig.3 Spearman rho all_swap=0.986230
+Fig.3 saved: E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments\paper_figures\eps\fig3_incremental_locality.eps, E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments\paper_figures\tif\fig3_incremental_locality.tif, E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments\paper_figures\preview\fig3_incremental_locality.png
+Fig.3 TIFF meta: {'mode': 'RGB', 'size': (3862, 1442), 'dpi': (600.0, 600.0), 'compression': 'tiff_lzw'}
+Fig.3 size: 165.0 mm wide
+Fig.3 sanity: PASSED
+Wrote E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments\paper_figures\source\d_only_summary.csv
+Wrote E:\Homework\1研究生课程\AAA小论文\A论文编写\计算机研究与发展\experiments\paper_figures\source\sensitivity_compact_summary.csv
