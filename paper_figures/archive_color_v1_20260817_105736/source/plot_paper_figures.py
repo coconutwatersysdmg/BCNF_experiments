@@ -582,10 +582,9 @@ def plot_fig2(sens: pd.DataFrame, font_info: dict, report: list[str]) -> None:
     report.append(f"Fig.2 fd=15 memory reduction = {mem15_fd/mem15_bc:.4f}x")
     report.append(f"Fig.2 index compression at fd=15 = {float(last.compression_ratio)*100:.2f}% (15→1)")
 
-    # Vertical stack: clearer in single-column Word layout
-    w = mm_to_inch(FIG1_WIDTH_MM)  # ~85–90 mm, one column
-    h = w * 1.55
-    fig, axes = plt.subplots(2, 1, figsize=(w, h), sharex=False)
+    w = mm_to_inch(DOUBLE_COLUMN_MM)
+    h = w * 0.38
+    fig, axes = plt.subplots(1, 2, figsize=(w, h))
 
     # (a) runtime
     ax = axes[0]
@@ -644,6 +643,7 @@ def plot_fig2(sens: pd.DataFrame, font_info: dict, report: list[str]) -> None:
     set_label(ax, "y", "峰值内存/MB", font_info)
     ax.set_xticks([1, 2, 4, 8, 15])
     style_legend(ax, font_info, loc="upper left")
+    # compact annotation if space
     ax.text(
         0.98,
         0.55,
@@ -670,12 +670,12 @@ def plot_fig2(sens: pd.DataFrame, font_info: dict, report: list[str]) -> None:
         for spine in ax.spines.values():
             spine.set_linewidth(AXES_LW)
 
-    fig.tight_layout(pad=0.35, h_pad=0.8)
+    fig.tight_layout(pad=0.4, w_pad=1.0)
     paths = save_figure(fig, "fig2_fd_scaling", font_info)
     plt.close(fig)
     report.append(f"Fig.2 saved: {paths['eps']}, {paths['tif']}, {paths['png']}")
     report.append(f"Fig.2 TIFF meta: {paths['tif_meta']}")
-    report.append(f"Fig.2 size: {FIG1_WIDTH_MM} mm wide, vertical 2×1 layout")
+    report.append(f"Fig.2 size: {DOUBLE_COLUMN_MM} mm wide")
     report.append("Fig.2 sanity: PASSED")
 
 
@@ -795,10 +795,9 @@ def plot_fig3(inc: pd.DataFrame, font_info: dict, report: list[str]) -> None:
     out_a.to_csv(OUT_SOURCE / "fig3a_binned_data.csv", index=False)
     out_b.to_csv(OUT_SOURCE / "fig3b_speedup_data.csv", index=False)
 
-    # Vertical stack: clearer in single-column Word layout
-    w = mm_to_inch(FIG1_WIDTH_MM)  # ~85 mm, one column
-    h = w * 1.55
-    fig, axes = plt.subplots(2, 1, figsize=(w, h), sharex=False)
+    w = mm_to_inch(DOUBLE_COLUMN_MM)
+    h = w * 0.38
+    fig, axes = plt.subplots(1, 2, figsize=(w, h))
 
     # (a)
     ax = axes[0]
@@ -894,12 +893,12 @@ def plot_fig3(inc: pd.DataFrame, font_info: dict, report: list[str]) -> None:
         for spine in ax.spines.values():
             spine.set_linewidth(AXES_LW)
 
-    fig.tight_layout(pad=0.35, h_pad=0.8)
+    fig.tight_layout(pad=0.4, w_pad=1.0)
     paths = save_figure(fig, "fig3_incremental_locality", font_info)
     plt.close(fig)
     report.append(f"Fig.3 saved: {paths['eps']}, {paths['tif']}, {paths['png']}")
     report.append(f"Fig.3 TIFF meta: {paths['tif_meta']}")
-    report.append(f"Fig.3 size: {FIG1_WIDTH_MM} mm wide, vertical 2×1 layout")
+    report.append(f"Fig.3 size: {DOUBLE_COLUMN_MM} mm wide")
     report.append("Fig.3 sanity: PASSED")
 
 

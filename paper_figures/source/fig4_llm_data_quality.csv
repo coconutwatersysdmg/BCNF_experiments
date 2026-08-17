@@ -1,0 +1,13 @@
+panel,category,provider,model_label,condition,accuracy,accuracy_pct,ci_low,ci_high,n
+(a),ALL,zhipu,GLM-4-Flash,clean,1.0,100.0,0.996809,1.0,1200
+(a),ALL,zhipu,GLM-4-Flash,dirty,0.813333,81.3333,0.7903,0.834367,1200
+(a),ALL,zhipu,GLM-4-Flash,valid_repair,1.0,100.0,0.996809,1.0,1200
+(a),ALL,bailian,Qwen3.7-Flash,clean,1.0,100.0,0.996809,1.0,1200
+(a),ALL,bailian,Qwen3.7-Flash,dirty,0.735833,73.5833,0.710164,0.759997,1200
+(a),ALL,bailian,Qwen3.7-Flash,valid_repair,1.0,100.0,0.996809,1.0,1200
+(b),Answer-Critical-Conflict,zhipu,GLM-4-Flash,clean,1.0,100.0,0.992061,1.0,480
+(b),Answer-Critical-Conflict,zhipu,GLM-4-Flash,dirty,0.533333,53.333299999999994,0.488615,0.577522,480
+(b),Answer-Critical-Conflict,zhipu,GLM-4-Flash,valid_repair,1.0,100.0,0.992061,1.0,480
+(b),Answer-Critical-Conflict,bailian,Qwen3.7-Flash,clean,1.0,100.0,0.992061,1.0,480
+(b),Answer-Critical-Conflict,bailian,Qwen3.7-Flash,dirty,0.339583,33.9583,0.298641,0.383073,480
+(b),Answer-Critical-Conflict,bailian,Qwen3.7-Flash,valid_repair,1.0,100.0,0.992061,1.0,480

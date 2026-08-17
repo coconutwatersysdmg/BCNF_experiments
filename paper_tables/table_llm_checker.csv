@@ -1,0 +1,3 @@
+model,provider,candidate_affected_accuracy,checked_affected_accuracy,candidate_unaffected_accuracy,checked_unaffected_accuracy,candidate_affected_unknown_rate,checked_affected_unknown_rate,checker_detection_rate,unchecked_invalid_exposure_rate,checked_invalid_exposure_rate,unchecked_affected_qa_accuracy
+GLM-4-Flash,zhipu,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,1.000000,1.000000,0.000000,0.554054
+Qwen3.7-Flash,bailian,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,1.000000,1.000000,0.000000,0.276062
