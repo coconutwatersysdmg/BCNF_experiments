@@ -1,76 +1,78 @@
-# BCNF 条件下子集修复检查实验代码
+# Experiments for BCNF Subset-Repair Checking
 
-本仓库是论文《BCNF条件下的数据库子集修复检查问题研究》第 4.2–4.4 节的实验代码，产出正文图3（静态扩展性）、图4（函数依赖数量的影响）、图5（增量修复的局部更新性能）及 165.7 倍加速比数据；一条命令 `powershell -ExecutionPolicy Bypass -File scripts/run_final_pipeline.ps1` 即可重跑全部实验并重出图；环境为 Python 3.12 + `pip install -r requirements.txt`（numpy / pandas / matplotlib / Pillow / pytest）。
+Code for Sections 4.2–4.4 of the paper *Leveraging BCNF Schema Structure for Efficient Subset-Repair Checking*. It produces Fig. 3 (static scalability), Fig. 4 (effect of the number of functional dependencies), Fig. 5 (local-update performance of incremental maintenance), and the 165.7× speedup reported in the paper. A single command, `powershell -ExecutionPolicy Bypass -File scripts/run_final_pipeline.ps1`, re-runs all experiments and regenerates the figures. Requires Python 3.12 and `pip install -r requirements.txt` (numpy, pandas, matplotlib, Pillow, pytest).
 
-## 1. 仓库与论文的对应关系
+## 1. Repository ↔ paper mapping
 
-| 仓库文件 | 论文位置 | 内容 | 生成脚本 | 数据文件 |
+| File in this repository | Paper item | Content | Producing script | Data |
 |---|---|---|---|---|
-| `paper_figures/tif/fig1_static_scalability.tif` | 图3（4.2 节） | 三种算法在 \|r\|=10³–10⁶ 上的运行时间与内存 | `scripts/run_static.py` | `results/final/static.csv` |
-| `paper_figures/tif/fig2_fd_scaling.tif` | 图4（4.3 节） | 非平凡函数依赖数量 1–15 的索引压缩与性能 | `scripts/run_sensitivity.py` | `results/final/sensitivity.csv` |
-| `paper_figures/tif/fig3_incremental_locality.tif` | 图5（4.4 节） | 增量维护与静态重建的对比、访问冲突块条目数与耗时的关系 | `scripts/run_incremental.py` | `results/final/incremental.csv` |
-| `paper_figures/tif/fig4_llm_data_quality.tif` | 图6（4.5 节） | LLM 结构化问答准确率 | `paper_figures/source/plot_llm_figures.py` | 读取同级 `llm_study/results/final/exp1_summary.csv` |
-| `paper_tables/table_fd_prompt.csv`、`table_llm_checker.csv` | 表1、表2 | 冲突识别 P/R/F1、候选修复缺陷的影响 | `scripts/build_llm_paper_tables.py` | 同上（`llm_study/results/final/`） |
+| `paper_figures/tif/fig1_static_scalability.tif` | Fig. 3 (§4.2) | Runtime and memory of the three algorithms for \|r\| = 10³–10⁶ | `scripts/run_static.py` | `results/final/static.csv` |
+| `paper_figures/tif/fig2_fd_scaling.tif` | Fig. 4 (§4.3) | Index compaction and runtime for 1–15 nontrivial FDs | `scripts/run_sensitivity.py` | `results/final/sensitivity.csv` |
+| `paper_figures/tif/fig3_incremental_locality.tif` | Fig. 5 (§4.4) | Incremental maintenance vs. full rebuild; entries in touched conflict blocks vs. elapsed time | `scripts/run_incremental.py` | `results/final/incremental.csv` |
+| `paper_figures/tif/fig4_llm_data_quality.tif` | Fig. 6 (§4.5) | Structured QA accuracy of the LLMs | `paper_figures/source/plot_llm_figures.py` | reads `../llm_study/results/final/exp1_summary.csv` |
+| `paper_tables/table_fd_prompt.csv`, `table_llm_checker.csv` | Tables 1 and 2 | Conflict-detection precision/recall/F1; effect of defective candidate repairs | `scripts/build_llm_paper_tables.py` | as above (`../llm_study/results/final/`) |
 
-仓库内图片文件名 `fig1..fig4` 是从 1 开始的内部编号，与论文图号相差 2：`fig1`→图3、`fig2`→图4、`fig3`→图5、`fig4`→图6。
+Figure files use the internal names `fig1`–`fig4`, numbered from 1 and therefore offset by two from the paper: `fig1`→Fig. 3, `fig2`→Fig. 4, `fig3`→Fig. 5, `fig4`→Fig. 6.
 
-图6 与表1、表2 的问答实验在独立仓库 `llm_study` 中运行，本仓库只负责据其结果绘图与建表；两个仓库放在同一父目录下即可。
+The QA experiment behind Fig. 6 and Tables 1–2 lives in a separate repository, `llm_study`; this repository only plots and tabulates its results. Clone both repositories under the same parent directory.
 
-## 2. 复现 165.7 倍
+## 2. Reproducing the 165.7× speedup
 
-论文 4.4 节报告的 165.7 倍对应 `swap` 更新、批大小 1000、`uniform` 冲突块分布这一组配置，由 5 个随机种子 × 100 个更新批次共 500 次独立运行得到。
+The speedup reported in §4.4 corresponds to `swap` updates, batch size 1000, and `uniform` conflict-block distribution, over 5 random seeds × 100 update batches (500 independent runs). The reported figure is the median of the per-batch speedups, which evaluates to 165.66 on the data included here.
 
 ```powershell
-# 重跑该组配置（单机约 5–10 分钟）
+# Re-run this configuration (about 5-10 minutes on one machine)
 python scripts/run_incremental.py --n 1000000 --seeds 1 2 3 4 5 `
   --block-distributions uniform --workloads swap --batch-sizes 1000 `
   --batches-per-config 100 --out results/final/incremental.csv `
   --config-out results/final/incremental_config.json
 
-# 复算该数字（每批次加速比取中位数）
+# Recompute the number (median of per-batch speedups)
 python -c "import pandas as pd; d=pd.read_csv('results/final/incremental.csv'); s=d[(d.workload=='swap')&(d.batch_size==1000)&(d.block_distribution=='uniform')]; print((s.static_total_time/s.incremental_total_time).median())"
 ```
 
-固定条件：`--n 1000000`（即 |r|）、`--conflict-ratio 0.1`、`--key-width 1`、`--fd-count 4`、种子 `1 2 3 4 5`、每配置 100 批。随机性由 `--seeds` 决定，`common/reproducibility.py` 的 `set_global_seed()` 统一设置全局种子，不需要额外环境变量。
+Fixed conditions: `--n 1000000` (that is, \|r\|), `--conflict-ratio 0.1`, `--key-width 1`, `--fd-count 4`, seeds `1 2 3 4 5`, and 100 batches per configuration. Randomness is driven entirely by `--seeds`; `common/reproducibility.py::set_global_seed()` sets the global seed, so no extra environment variables are needed.
 
-图5 的完整曲线用 `--block-distributions uniform zipf_1.2 --workloads d_only swap --batch-sizes 1 10 100 1000` 运行，即 `scripts/run_final_pipeline.ps1` 的第 5 步。
+The full curve in Fig. 5 uses `--block-distributions uniform zipf_1.2 --workloads d_only swap --batch-sizes 1 10 100 1000`, which is step 5 of `scripts/run_final_pipeline.ps1`.
 
-## 3. 目录结构
+## 3. Layout
 
 ```
-algorithms/      BCNF-Index、FD-Hash、Singleton-FullScan、Exhaustive 四种检查器 + 增量维护状态
-common/          函数依赖工具、类型定义、度量、复现性工具
-generators/      BCNF 模式生成、实例生成、冲突注入（数据全部由此生成，无需外部数据集）
-scripts/         实验入口：correctness / static / sensitivity / incremental / 汇总 / 建表
-paper_figures/   source（绘图脚本）、eps、tif、preview
-paper_tables/    论文表1、表2 的 CSV
-results/final/   论文引用的全部原始数据（CSV）与运行配置（JSON）
-tests/           单元测试，含 500 例 key-cover 差分测试
-dev/             开发期脚本与早期 LLM runner，非论文实验所需，不参与复现
+algorithms/      BCNF-Index, FD-Hash, Singleton-FullScan, Exhaustive checkers + incremental state
+common/          FD utilities, type definitions, metrics, reproducibility helpers
+generators/      BCNF schema generation, instance generation, conflict injection (all data is generated here)
+scripts/         Experiment entry points: correctness / static / sensitivity / incremental / summarization / tables
+paper_figures/   source (plotting scripts), eps, tif, preview
+paper_tables/    CSV files for Tables 1 and 2
+results/final/   All raw data (CSV) and run configurations (JSON) cited in the paper
+tests/           Unit tests, including a 500-case key-cover differential test
+dev/             Development-era scripts and an early LLM runner; not needed for reproduction
 ```
 
-## 4. 环境
+## 4. Environment
 
-Python 3.12：
+Python 3.12:
 
 ```bash
 pip install -r requirements.txt
-python -m pytest tests -q        # 623 项测试应全部通过
+python -m pytest tests -q        # all 623 tests should pass
 ```
 
-实验数据不随仓库分发（体积大），由 `generators/` 按固定种子现场生成；`results/final/` 中保存的是论文引用的那一份数据，用于核对，不必重新生成。
+Experiment data is not shipped in the repository (it is large) and is generated on the fly by `generators/` from fixed seeds. `results/final/` holds the exact data cited in the paper, provided for verification; there is no need to regenerate it.
 
-## 5. 关键实现约定
+## 5. Implementation notes
 
-- **算法只报告确定性结果**：`BCNFRepairChecker` 初始化时调用 `schema.validate_bcnf()`，模式不满足 BCNF 直接抛 `ValueError`，不回退到一般函数依赖算法。
-- **S-repair 为包含极大**，不是基数最大。检查器通过只说明候选满足函数依赖且不可再扩充，不表示被保留的元组是“真实事实”。
-- **计时口径**：增量实验的更新序列（`UpdateOp` 计划）在计时器之外预先生成，增量与静态重放同一批更新，两侧计时范围一致。
-- **正确性门槛**：`results/final/correctness.csv` 记录 2000 个随机用例上 Exhaustive / Singleton-FullScan / FD-Hash / BCNF-Index 的判定一致性。
+- **Deterministic results only.** `BCNFRepairChecker` calls `schema.validate_bcnf()` during initialization and raises `ValueError` for a schema that violates BCNF; it never falls back to a general FD-based algorithm.
+- **S-repairs are inclusion-maximal, not maximum-cardinality.** A passing check means the candidate satisfies the FDs and cannot be extended further; it does not assert that the retained tuples are the ground truth.
+- **Timing scope.** In the incremental experiments the update sequence (`UpdateOp` plan) is generated before the timer starts, and incremental and static modes replay the same updates, so both sides are timed over the same work.
+- **Correctness gate.** `results/final/correctness.csv` records, over 2000 random cases, whether Exhaustive / Singleton-FullScan / FD-Hash / BCNF-Index agree.
 
-## 6. 引用
+## 6. Citation
 
-若使用本仓库代码，请引用论文《BCNF条件下的数据库子集修复检查问题研究》，计算机研究与发展。
+If you use this code, please cite:
 
-## 7. 许可
+> Leveraging BCNF Schema Structure for Efficient Subset-Repair Checking. IEEE International Conference on Data Engineering (ICDE), 2027.
 
-MIT 许可，见 [`LICENSE`](LICENSE)。
+## 7. License
+
+MIT, see [`LICENSE`](LICENSE).
