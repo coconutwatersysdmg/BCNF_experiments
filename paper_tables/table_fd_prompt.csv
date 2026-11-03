@@ -1,0 +1,3 @@
+Model,Conflict Precision,Conflict Recall,Conflict F1,Non-conflict Answer Accuracy
+GLM-4-Flash,1.000000,0.672917,0.804483,0.997222
+Qwen3.7-Flash,0.721805,1.000000,0.838428,0.983178

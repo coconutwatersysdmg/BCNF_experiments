@@ -1,0 +1,5 @@
+part,model,provider,candidate_affected_accuracy,checked_affected_accuracy,candidate_unaffected_accuracy,checked_unaffected_accuracy,candidate_affected_unknown_rate,checked_affected_unknown_rate,checker_detection_rate,unchecked_exposure_rate,checked_exposure_rate,unchecked_affected_qa_accuracy
+A_overdeletion,GLM-4-Flash,zhipu,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,,,,
+B_residual,GLM-4-Flash,zhipu,,,,,,,1.000000,1.000000,0.000000,0.554054
+A_overdeletion,Qwen3.7-Flash,bailian,0.000000,1.000000,1.000000,1.000000,1.000000,0.000000,,,,
+B_residual,Qwen3.7-Flash,bailian,,,,,,,1.000000,1.000000,0.000000,0.276062

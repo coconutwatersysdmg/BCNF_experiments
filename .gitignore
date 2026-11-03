@@ -1,0 +1,18 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.vscode/
+.idea/
+
+# 运行中产生的大型中间数据（脚本会按需重新生成）
+data/llm_qa/
+data/synthetic/
+data/tpch/
+results/tmp/
+*.log
+
+# 绘图脚本每次运行生成的本地日志（含本机字体与路径信息）
+paper_figures/figure_report.txt
+
+# 论文数据保留：results/final/ 下的 CSV 与 config 均纳入版本管理

@@ -1,0 +1,40 @@
+{
+  "timestamp_utc": "2026-08-15T15:07:13.949565+00:00",
+  "config": {
+    "sizes": [
+      1000,
+      10000,
+      100000,
+      1000000
+    ],
+    "conflict_ratio": 0.1,
+    "fd_count": 4,
+    "key_width": 1,
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "case": "pass",
+    "warmup": 1,
+    "repeats": 5,
+    "timeout": 600.0,
+    "hard_timeout": true,
+    "algorithms": [
+      "Singleton-FullScan",
+      "FD-Hash",
+      "BCNF-Index"
+    ],
+    "n_attrs": 8,
+    "skew": "uniform",
+    "block_distribution": "uniform",
+    "out": "results\\final\\static.csv",
+    "config_out": "results\\final\\static_config.json",
+    "code_version": "68869e6",
+    "n_definition": "CSV n = |r|; --sizes are base_clean_size",
+    "use_key_cover": false,
+    "collect_certificates": false
+  }
+}

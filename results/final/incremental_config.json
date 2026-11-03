@@ -1,0 +1,37 @@
+{
+  "timestamp_utc": "2026-08-16T05:33:55.196427+00:00",
+  "config": {
+    "n": 1000000,
+    "conflict_ratio": 0.1,
+    "batch_sizes": [
+      1,
+      10,
+      100,
+      1000
+    ],
+    "batches_per_config": 100,
+    "seed": null,
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "block_distributions": [
+      "uniform",
+      "zipf_1.2"
+    ],
+    "workloads": [
+      "d_only",
+      "swap"
+    ],
+    "key_width": 1,
+    "fd_count": 4,
+    "full_equality": false,
+    "out": "results\\final\\incremental.csv",
+    "config_out": "results\\final\\incremental_config.json",
+    "code_version": "3b86002",
+    "n_definition": "n = |r| (dirty database size) in CSV; --n is base_clean_size"
+  }
+}
