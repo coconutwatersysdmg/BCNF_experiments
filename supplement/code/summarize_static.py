@@ -126,7 +126,8 @@ def main():
               'python -u run_static_supplement.py', 'python summarize_static.py', '```', '',
               'Run in a fresh output directory or archive an existing run first: raw records are append-only and the analysis rejects duplicate measurement keys.', '',
               f'Raw SHA-256: `{hashlib.sha256(raw.read_bytes()).hexdigest()}`.', '']
-    (ROOT / 'STATIC_REPORT.md').write_text('\n'.join(lines), encoding='utf-8')
+    (ROOT / 'reports').mkdir(exist_ok=True)
+    (ROOT / 'reports' / 'STATIC_REPORT.md').write_text('\n'.join(lines), encoding='utf-8')
     print(summary.to_string(index=False))
     print('\nPAIRED\n' + ratio.to_string(index=False))
     print(f'Generated report, CSVs, and figures; {len(timed)} timing observations.')

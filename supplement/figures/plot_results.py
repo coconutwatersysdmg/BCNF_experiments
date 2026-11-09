@@ -309,6 +309,7 @@ def figure6():
 
 def main():
     configure()
+    (ROOT/'fig').mkdir(exist_ok=True)
     for fn in [figure2,figure3,figure4,figure5,figure6]:fn()
     hashes={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT/'data').iterdir() if p.is_file()}
     (ROOT/'qa').mkdir(exist_ok=True)
