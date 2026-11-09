@@ -1,6 +1,6 @@
 # Experiments for BCNF Subset-Repair Checking
 
-Code for Sections 4.2–4.4 of the paper *Leveraging BCNF Schema Structure for Efficient Subset-Repair Checking*. It produces Fig. 3 (static scalability), Fig. 4 (effect of the number of functional dependencies), Fig. 5 (local-update performance of incremental maintenance), and the 165.7× speedup reported in the paper. A single command, `powershell -ExecutionPolicy Bypass -File scripts/run_final_pipeline.ps1`, re-runs all experiments and regenerates the figures. Requires Python 3.12 and `pip install -r requirements.txt` (numpy, pandas, matplotlib, Pillow, pytest).
+Code for Sections 4.2–4.4 of the paper *Efficient Subset-Repair Checking for a Relation Schema in BCNF*. It produces Fig. 3 (static scalability), Fig. 4 (effect of the number of functional dependencies), Fig. 5 (local-update performance of incremental maintenance), and the 165.7× speedup reported in the paper. A single command, `powershell -ExecutionPolicy Bypass -File scripts/run_final_pipeline.ps1`, re-runs all experiments and regenerates the figures. Requires Python 3.12 and `pip install -r requirements.txt` (numpy, pandas, matplotlib, Pillow, pytest).
 
 ## 1. Repository ↔ paper mapping
 
@@ -71,7 +71,7 @@ Experiment data is not shipped in the repository (it is large) and is generated 
 
 If you use this code, please cite:
 
-> Leveraging BCNF Schema Structure for Efficient Subset-Repair Checking. IEEE International Conference on Data Engineering (ICDE), 2027.
+> Efficient Subset-Repair Checking for a Relation Schema in BCNF. IEEE International Conference on Data Engineering (ICDE), 2027.
 
 ## 7. License
 
