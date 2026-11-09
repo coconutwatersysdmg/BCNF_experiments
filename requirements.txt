@@ -4,3 +4,8 @@ pandas>=1.5
 numpy>=1.24
 matplotlib>=3.6
 Pillow>=9.0
+
+# supplement/code/run_static_supplement.py (peak RSS reporting)
+psutil>=5.9
+# supplement/code/run_tpch_supplement.py (native SQL benchmark) only
+duckdb>=0.10

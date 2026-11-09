@@ -16,3 +16,10 @@ results/tmp/
 paper_figures/figure_report.txt
 
 # 论文数据保留：results/final/ 下的 CSV 与 config 均纳入版本管理
+
+# Supplement：由脚本重新生成的产物，不入库
+supplement/fig/
+supplement/qa/
+supplement/.duckdb_extensions/
+supplement/data/tpch_sf*.duckdb
+supplement/data/hot_smoke*.jsonl

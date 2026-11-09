@@ -1,0 +1,4 @@
+phase,sf,generation_sec,status,utc,table_counts,duckdb_version,file_sha256,table,seed,case,clean_rows,retained,original,excluded,witness_position,expected,wall_sec,load_sec,total_with_load_sec,is_repair,candidate_consistent,validation_sec,consistency_sec,maximality_sec,method,rep,order,build_sec,check_sec,exit_code,elapsed_sec
+load,0.1,,skipped_memory,2026-11-03T16:40:31.966954+00:00,,,,customer,202.0,repair,15000.0,15000.0,16500.0,1500.0,,"[True, True]",,,,,,,,,DuckDB-SQL,,,,,,
+load,0.1,,skipped_memory,2026-11-03T16:40:42.206298+00:00,,,,lineitem,101.0,repair,600572.0,600572.0,660629.0,60057.0,,"[True, True]",,,,,,,,,DuckDB-SQL,,,,,,
+load,0.1,,skipped_memory,2026-11-03T16:45:01.942899+00:00,,,,lineitem,303.0,inconsistent,600572.0,600573.0,660629.0,60056.0,,"[False, False]",,,,,,,,,DuckDB-SQL,,,,,,

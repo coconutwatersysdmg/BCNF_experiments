@@ -1,0 +1,84 @@
+{
+  "commit": "f9093e1b9e19aa2c1bf77fa5eb3872b0c3392f37",
+  "tag": "f9093e1b9e19aa2c1bf77fa5eb3872b0c3392f37",
+  "python": "3.12.7 | packaged by Anaconda, Inc. | (main, Oct  4 2024, 13:17:27) [MSC v.1929 64 bit (AMD64)]",
+  "executable": "D:\\ProgramData\\anaconda3\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+  "physical_bytes": 16890716160,
+  "available_bytes": 1205964800,
+  "cpu_count": 20,
+  "sources": {
+    "algorithms\\bcnf_index.py": "7698752e40cbfad9d4c3e0a63e428951a93468c7ccb2990161a38d61ebc1cd7e",
+    "algorithms\\fd_hash.py": "bfdd00e94d23636d5bc64096b9a10c834dc545fd097c9fbc1d07fd43ecb311f7",
+    "algorithms\\general.py": "a752f8d48ac4f77d513d47a286022d1f454aee19b928f357fb408bc5959613ba",
+    "algorithms\\incremental.py": "c1ce989f5583c2fc589a13725038ecbb17e1932d7b130dad42fb6ddcb435b4be",
+    "algorithms\\singleton_fullscan.py": "9d289bfc3f482bcc2a1d5c56d98a4933cfe396ea9e78d0b329f51b85d9c4476b",
+    "algorithms\\__init__.py": "43518e44270ab316eaefa7a8bb046163949464f8c19816f1e79904711d354218",
+    "common\\fd_utils.py": "bb759b82122a3f134c1654f3b8c228d00c2c8884ccaaa8772e8e8e257f3c1a2e",
+    "common\\io_utils.py": "7ce04c6a3ed75e66f5bd6b7a7fb690a548ac7005d604de575aef98b83c7d89a7",
+    "common\\metrics.py": "42b09cfae61a20b0dfc812238808a015c6f612f93c29ccd4bd694ada041cdb99",
+    "common\\reproducibility.py": "e0ba25c7be22d75f9a5b90660a1d35a470e5c19e3f238a1f5f8c6ef946903df1",
+    "common\\types.py": "adedb2d2d70b161ff921526e060580afa0b0ad1ff4176d4a3e1a5aa07115f7c3",
+    "common\\__init__.py": "49823d077f10216ccc22848277f666cae94bdcf6f624166438129a3c7a140e24",
+    "generators\\conflict_injector.py": "aab768f2b58030bb9cbc4c63162a7082fe8d079fc52606f69c18872b7a796b16",
+    "generators\\instance_generator.py": "f3f971f2ecad47de74a98528ea4d3d7026d66bff43742e6b49415a35df4482fe",
+    "generators\\schema_generator.py": "4b1d3a7aeb90c08a49cbe250ad61b6a4a118af6e87ebf0a5028fb6661cf346ad",
+    "generators\\tpch_loader.py": "570edfc931692e8c83669378c184da17d4fc80daa43a163eafc1d0456e6dd738",
+    "generators\\__init__.py": "982b5994225d163b05fc84e99357888cc9745d68e6053e1d5b9dee22bd016ec2"
+  },
+  "new_sources": {
+    "overnight_queue.py": "a6c4c7d5084ca0b6196e56a36c207bcb06f060eef3dd7ee1eb50534f6837daa0",
+    "run_hot_incremental.py": "3befb13b4d257c68acca3242c979a222f788e26839ab64d26fc76cb550a8fc31",
+    "run_static_supplement.py": "ba308781c5cad1ce2abc69af05f448a0371de6086618c9aa6270d482a9f9d98e",
+    "run_tpch_supplement.py": "cae413affaab76cf90a0fc02b1ed6c986d948513501ed98052d73c3d0078e479",
+    "summarize_hot.py": "1d8163c61b5d4a10a58daea0ca9f9da22cf53bc11bd1f73e79fad05b1955cc16",
+    "summarize_static.py": "b7521603767e410dc29860d4f38b5130f9e6ed6a5c851a554994cf3319739e52",
+    "summarize_tpch.py": "5e44353973af5d98894e7e279d6782a6d7886a07ac1b29972c222973d501af4f",
+    "supplement.py": "113cfee7795970947d7dbd9511f2e1c68f427ec43b8daeeba173997ad98b4f26",
+    "test_supplement.py": "2616235c945c097fc751a171794525c729abc9e0c593cd82dd15af897521b50a"
+  },
+  "seeds_legacy": [
+    1,
+    2,
+    3
+  ],
+  "seeds_key_control": [
+    101,
+    202,
+    303
+  ],
+  "warmup": 1,
+  "repetitions": 3,
+  "hashseed": "0",
+  "timing": "public check + index release wall time; schema preprocessing excluded; no tracemalloc; protocol v2",
+  "allocation": "separate seed-1 or seed-101 run, one observation; Python allocation only",
+  "reserve_bytes": 536870912,
+  "duckdb_version": "2.0.0",
+  "sql_threads": 1,
+  "sql_memory_limit": "256MB",
+  "data_source": "DuckDB tpch extension; benchmark-derived, injected conflicts, not natural dirty data",
+  "scales": [
+    0.01,
+    0.1
+  ],
+  "projections": {
+    "customer": {
+      "query": "SELECT c_custkey, c_nationkey, c_name, c_acctbal::DOUBLE AS c_acctbal, c_mktsegment, c_comment FROM customer ORDER BY c_custkey",
+      "key": [
+        "c_custkey"
+      ]
+    },
+    "lineitem": {
+      "query": "SELECT l_orderkey, l_linenumber, l_partkey, l_quantity::DOUBLE AS l_quantity, l_extendedprice::DOUBLE AS l_extendedprice, l_comment FROM lineitem ORDER BY l_orderkey,l_linenumber",
+      "key": [
+        "l_orderkey",
+        "l_linenumber"
+      ]
+    }
+  },
+  "comparison": "Python cold checker vs SQL resident query; SQL load+query also reported",
+  "sql_load_repetitions": "one load per seed/candidate; added to each resident query observation, not three independent loads",
+  "python_null_semantics": "No NULLs in selected/generated values",
+  "source_url": "https://duckdb.org/docs/2.0/core_extensions/tpch"
+}

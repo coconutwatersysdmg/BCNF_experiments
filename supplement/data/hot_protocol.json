@@ -1,0 +1,27 @@
+{
+  "retained": 50000,
+  "deleted": 10000,
+  "hot_group_sizes": [
+    1,
+    100,
+    10000
+  ],
+  "batch_sizes": [
+    1,
+    10,
+    100
+  ],
+  "seeds": [
+    101,
+    202,
+    303
+  ],
+  "batches_per_cell": 30,
+  "threads": "Python single thread",
+  "warmup": "one swap plus inverse",
+  "tracing": false,
+  "source": "frozen BCNFRepairState, PlainRepairState, UpdateOp",
+  "timing": "inc apply+decision; static apply+list conversion+rebuild+decision+index release",
+  "validation": "full partition equality, repair+consistency agreement and exact 2*h*batch touched entries after every batch",
+  "percentiles": "descriptive p95/p99 over 90 measured batches per configuration; not independent-trial confidence bounds"
+}
